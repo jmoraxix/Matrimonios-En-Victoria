@@ -47,8 +47,7 @@
 					<path>/${project.build.finalName}</path>
 					<update>true</update>
 					<url>http://localhost:8080/manager/text</url>
-					<username>admin</username>
-					<password>admin</password>
+					<server>TomcatServer</server>
 				</configuration>
 			</plugin>
 

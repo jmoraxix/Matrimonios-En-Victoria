@@ -9,7 +9,7 @@
 <!--===========================================================================
     GLOBAL_INCLUDES FILE
 ============================================================================-->
-<spring:url value="/resources" var="resources" />
+<spring:url value="/WebContent/" var="resources" />
 <!-- JQUERY -->
 <script type="text/javascript" src="${resources}/js/commons/jquery-3.1.1.js"></script>
 

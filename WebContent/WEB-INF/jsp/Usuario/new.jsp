@@ -49,40 +49,52 @@
         <!-- Example row of columns -->
         <div class="row justify-content-center">
             <div class="col-md-9 col sm-12">
-                <form action="new.do" method="post">
+                <form action="new" method="post">
                         <input name="new" type="hidden" id="new">
-                	
+                		<div><span class="text-danger">${error}</span><div>
+                		<div><span class="text-success">${success}</span><div>
                         <div class="form-group">
                             <label for="cedula">Cedula</label>
-                            <input name="cedula" type="number" class="form-control" id="cedula" placeholder="Cedula">
+                            <input min="1" max="9999999999" required name="cedula" type="number" class="form-control" id="cedula" placeholder="Cedula">
                         </div>
                         <div class="form-group">
                             <label for="password">Contraseña</label>
-                            <input name="password" type="password" class="form-control" id="password" aria-describedby="emailHelp" placeholder="Contraseña">
+                            <input required name="password" type="password" class="form-control" id="password" aria-describedby="emailHelp" placeholder="Contraseña">
                         </div>
                         <div class="form-group">
                             <label for="password">Confirmar Contraseña</label>
-                            <input name="passwordConfirm" type="password" class="form-control" id="passwordConfirm" placeholder="Confirmar Contraseña">
+                            <input required name="passwordConfirm" type="password" class="form-control" id="passwordConfirm" placeholder="Confirmar Contraseña">
                         </div>
                         <div class="form-group">
                             <label for="nombre">Nombre</label>
-                            <input name="nombre" type="text" class="form-control" id="nombre" placeholder="Cedula">
+                            <input required name="nombre" type="text" class="form-control" id="nombre" placeholder="Nombre">
                         </div>
                         <div class="form-group">
-                            <label for="apellidoUno">Apellido 1</label>
-                            <input name="apellidoUno" type="text" class="form-control" id="apellidoUno" placeholder="Apellido 1">
+                            <label for="apellidoUno">Apellido</label>
+                            <input required name="apellido" type="text" class="form-control" id="apellido" placeholder="Apellido">
                         </div>
-                        <div class="form-group">
-                            <label for="apellidoDos">Apellido 2</label>
-                            <input name="apellidoDos" type="text" class="form-control" id="apellidoDos" placeholder="Apellido 2">
-                        </div>
+   
                         <div class="form-group">
                             <label for="exampleInputEmail1">Fecha de Nacimiento</label>
-                            <input name="fechaNacimiento" type="date" class="form-control" id="fechaNacimiento" placeholder="Fecha de Nacimiento">
+                            <input required name="fechaNacimientoString" type="date" class="form-control" id="fechaNacimientoString" placeholder="Fecha de Nacimiento">
                         </div>
+                        
+                        <div class="form-check">
+						  <input class="form-check-input" type="radio" name="sexo" id="rdioMasculino" value="m" checked>
+						  <label class="form-check-label" for="rdioMasculino">
+						    Masculino
+						  </label>
+						</div>
+						<div class="form-check">
+						  <input class="form-check-input" type="radio" name="sexo" id="rdioFemenino" value="f">
+						  <label class="form-check-label" for="rdioFemenino">
+						    Femenino
+						  </label>
+						</div>
+                        
                         <div class="form-group">
                             <label for="exampleInputEmail1">Detalle de Direccion</label>
-                            <textarea name="detalleDireccion" class="form-control" name="detalleDireccion" cols="30" rows="5" item-width="100%"></textarea>
+                            <textarea required name="detalleDireccion" class="form-control" name="detalleDireccion" cols="30" rows="5" item-width="100%"></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">Crear</button>
         

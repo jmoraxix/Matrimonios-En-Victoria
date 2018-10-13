@@ -5,10 +5,13 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
 import javax.persistence.Table;
+import javax.persistence.InheritanceType;
 
 @Entity
 @Table(name = "MIEMBRO")
+@Inheritance(strategy=InheritanceType.JOINED)
 public class Miembro {
 	@Id
 	private String cedula;
@@ -24,12 +27,12 @@ public class Miembro {
 	private String Sexo;
 
 	public Miembro() {
-		super();
+		//super();
 	}
 
 	public Miembro(String cedula, String nombre, String apellido, Date fechaNacimiento, String detalleDireccion,
 			String sexo) {
-		super();
+		//super();
 		this.cedula = cedula;
 		this.nombre = nombre;
 		this.apellido = apellido;

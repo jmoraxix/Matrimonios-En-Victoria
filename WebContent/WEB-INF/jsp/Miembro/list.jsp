@@ -89,10 +89,10 @@
                                 <td>${miembro.apellido}</td>
                                 <td>${miembro.sexo}</td>
                                 <td>
-                                    <a href="/miembro/edit/${miembro.cedula}" class="btn btn-warning">Editar</a>
+                                    <a href="edit/${miembro.cedula}" class="btn btn-warning">Editar</a>
                                 </td>
                                 <td>
-                                    <a href="/miembro/delete/${miembro.cedula}" class="btn btn-danger">Eliminar</a>
+                                    <a href="delete/${miembro.cedula}" class="btn btn-danger">Eliminar</a>
                                 </td>
                             </tr>
                         </c:forEach>

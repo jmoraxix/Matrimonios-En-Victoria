@@ -6,9 +6,13 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,56 +27,91 @@ import com.mev.web.service.UsuarioBO;
 @Controller
 public class MiembroController {
 
-	 @Autowired
-	 private MiembroBO miembroBO;
+	@Autowired
+	private MiembroBO miembroBO;
 
 	final static Logger log = Logger.getLogger(MiembroController.class);
 
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		sdf.setLenient(true);
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
+	}
+
 	@RequestMapping(value = "/miembro/new", method = RequestMethod.GET)
 	public String getNew(Model model) {
-		model.addAttribute(
-				"title", "Nuevo Miembro");
+		model.addAttribute("title", "Nuevo Miembro");
 		return "Miembro/new";
 	}// END GET NEW
 
 	@RequestMapping(value = "/miembro/new", params = "new", method = RequestMethod.POST)
-	public String postNew(@RequestParam String cedula, 
-			@RequestParam String nombre, @RequestParam String apellido
-			, @RequestParam String fechaNacimientoString,
-			@RequestParam String detalleDireccion, @RequestParam String sexo, Model model) {
-		
+	public String postNew(@RequestParam String cedula, @RequestParam String nombre, @RequestParam String apellido,
+			@RequestParam String fechaNacimientoString, @RequestParam String detalleDireccion,
+			@RequestParam String sexo, Model model) {
+
 		Date fechaNacimiento;
-		//Convert parameter date to actual date object
+		// Convert parameter date to actual date object
 		try {
 			fechaNacimiento = new SimpleDateFormat("yyyy-MM-dd").parse(fechaNacimientoString);
 		} catch (ParseException e) {
 			e.printStackTrace();
 			model.addAttribute("error", e.toString());
 			return "Miembro/new";
-		}  
+		}
 
-		
-		//Check if member already exists
-		if(miembroBO.getMiembroByID(cedula) != null) {
+		// Check if member already exists
+		if (miembroBO.getMiembroByID(cedula) != null) {
 			model.addAttribute("error", "La cedula ya esta registrada");
 			return "Miembro/new";
 		}
-		
-		//Create user object
+
+		// Create user object
 		Miembro miembro = new Miembro(cedula, nombre, apellido, fechaNacimiento, detalleDireccion, sexo);
 		miembroBO.save(miembro);
 		model.addAttribute("success", "Guardado con exito!");
-		return("Miembro/new");
+		return ("Miembro/new");
 	}// END POST NEW
 
-	
-	////LIST
-	
+	//// LIST
+
 	@RequestMapping(value = "/miembro/list", method = RequestMethod.GET)
-	public String getList(Model model) {
-		model.addAttribute(
-				"miembros", miembroBO.listMiembros());
+	public String getList(String cedula, Model model) {
+		model.addAttribute("miembros", miembroBO.listMiembros());
 		return "Miembro/list";
-	}// END GET NEW
+	}// END GET LIST
+
+	//// EDIT
+	@RequestMapping(value = "/miembro/edit/{cedula}", method = RequestMethod.GET)
+	public String getEdit(@PathVariable(required = true) String cedula, Model model) {
+		Miembro miembro = miembroBO.getMiembroByID(cedula);
+
+		// Check if member is registered
+		if (miembro == null) {
+			model.addAttribute("error", "Cedula no encontrada");
+			return "Miembro/edit";
+		}
+
+		model.addAttribute("miembro", miembro);
+
+		return "Miembro/edit";
+	}// END GET EDIT
+
+	@RequestMapping(value = "/miembro/edit/{cedula}", method = RequestMethod.POST)
+	public String postEdit(@PathVariable(required = true) String cedula, @RequestParam String nombre,
+			@RequestParam String apellido, @RequestParam String fechaNacimientoString,
+			@RequestParam String detalleDireccion, @RequestParam String sexo, Model model) {
+		Miembro miembro = miembroBO.getMiembroByID(cedula);
+
+		// Check if member is registered
+		if (miembro == null) {
+			model.addAttribute("error", "Cedula no encontrada");
+			return "Miembro/edit";
+		}
+
+		model.addAttribute("miembro", miembro);
+
+		return "Miembro/edit";
+	}// END GET EDIT
 
 }

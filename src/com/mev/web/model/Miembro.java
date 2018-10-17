@@ -7,6 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.Table;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.InheritanceType;
 
 @Entity
@@ -20,6 +23,7 @@ public class Miembro {
 	@Column
 	private String apellido;
 	@Column
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date fechaNacimiento;
 	@Column
 	private String detalleDireccion;
@@ -89,4 +93,11 @@ public class Miembro {
 		Sexo = sexo;
 	}
 
+	@Override
+	public String toString() {
+		return "Miembro [cedula=" + cedula + ", nombre=" + nombre + ", apellido=" + apellido + ", fechaNacimiento="
+				+ fechaNacimiento + ", detalleDireccion=" + detalleDireccion + ", Sexo=" + Sexo + "]";
+	}
+
+	
 }

@@ -53,36 +53,36 @@
         <!-- Example row of columns -->
         <div class="row justify-content-center">
             <div class="col-md-9 col sm-12">
-                <form action="new" method="post">
-                        <input name="new" type="hidden" id="new">
+            	<form:form method="post" servletRelativeAction="/miembro/edit" modelAttribute="miembro">
+                        <input name="edit" type="hidden" id="edit">
                 		<div><span class="text-danger">${error}</span><div>
                 		<div><span class="text-success">${success}</span><div>
                         <div class="form-group">
                             <label for="cedula">Cedula</label>
-                            <input disabled min="1" max="9999999999" required name="cedula" type="number" class="form-control" id="cedula" placeholder="Cedula" value="${miembro.cedula}">
+                        	<form:input type="number" path="cedula" readonly="true" min="1" max="9999999999" required="" class="form-control" id="cedula" placeholder="Cedula"/>
                         </div>
                         <div class="form-group">
                             <label for="nombre">Nombre</label>
-                            <input value="${miembro.nombre}" required name="nombre" type="text" class="form-control" id="nombre" placeholder="Nombre">
+                            <form:input type="text" path="nombre" required="" class="form-control" id="nombre" placeholder="Nombre"/>
                         </div>
                         <div class="form-group">
                             <label for="apellidoUno">Apellido</label>
-                            <input value="${miembro.apellido}" required name="apellido" type="text" class="form-control" id="apellido" placeholder="Apellido">
+                            <form:input type="text" path="apellido" required="" class="form-control" id="apellido" placeholder="Apellido"/>
                         </div>
    
                         <div class="form-group">
                             <label for="fechaNacimientoString">Fecha de Nacimiento</label>
-                            <input value='<fmt:formatDate value="${miembro.fechaNacimiento}" pattern="yyyy-MM-dd" />' required name="fechaNacimientoString" type="date" class="form-control" id="fechaNacimientoString" placeholder="Fecha de Nacimiento">
+                            <form:input type="date" path="fechaNacimiento" required="" class="form-control" />
                         </div>
                         
                         <div class="form-check">
-						  <form:radiobutton path="miembro.sexo" value="m" checked="${miembro.sexo == 'm' ? 'checked' : '' }" />
+						  <form:radiobutton path="sexo" value="m" />
 						  <label class="form-check-label" for="rdioMasculino">
 						    Masculino
 						  </label>
 						</div>
 						<div class="form-check">
-						<form:radiobutton path="miembro.sexo" value="f" checked="${miembro.sexo == 'f' ? 'checked' : '' }" />
+						<form:radiobutton path="sexo" value="f" />
 						  <label class="form-check-label" for="rdioFemenino">
 						    Femenino
 						  </label>
@@ -90,11 +90,11 @@
                         
                         <div class="form-group">
                             <label for="exampleInputEmail1">Detalle de Direccion</label>
-                            <textarea required name="detalleDireccion" class="form-control" name="detalleDireccion" cols="30" rows="5" item-width="100%">${miembro.detalleDireccion}</textarea>
+                            <form:textarea path="detalleDireccion" required="" class="form-control" name="detalleDireccion" cols="30" rows="5" item-width="100%"/>
                         </div>
-                        <button type="submit" class="btn btn-primary">Crear</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
         
-                </form>
+                </form:form>
             </div>
         </div>
 

@@ -3,6 +3,7 @@ package com.mev.web.controller;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Optional;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -75,43 +77,50 @@ public class MiembroController {
 
 	//// LIST
 
-	@RequestMapping(value = "/miembro/list", method = RequestMethod.GET)
-	public String getList(String cedula, Model model) {
+	@RequestMapping(value = "/miembro/list",method = RequestMethod.GET)
+	public String getList(@RequestParam(required = false, defaultValue = "null", value = "error") String error, Model model) {
+		//Por si alguna pagina necesita decir que la cedula esta mal u otro error
+		if(!error.equals("null")) {
+			model.addAttribute("error", error);
+		}
+		
 		model.addAttribute("miembros", miembroBO.listMiembros());
 		return "Miembro/list";
 	}// END GET LIST
 
 	//// EDIT
 	@RequestMapping(value = "/miembro/edit/{cedula}", method = RequestMethod.GET)
-	public String getEdit(@PathVariable(required = true) String cedula, Model model) {
+	public String getEdit(@PathVariable(required = true) String cedula, 
+			Model model) {
 		Miembro miembro = miembroBO.getMiembroByID(cedula);
 
 		// Check if member is registered
 		if (miembro == null) {
 			model.addAttribute("error", "Cedula no encontrada");
-			return "Miembro/edit";
+			return "redirect:/miembro/list";
 		}
 
+		//model.addAttribute("sexo", miembro.getSexo());
 		model.addAttribute("miembro", miembro);
 
 		return "Miembro/edit";
 	}// END GET EDIT
 
-	@RequestMapping(value = "/miembro/edit/{cedula}", method = RequestMethod.POST)
-	public String postEdit(@PathVariable(required = true) String cedula, @RequestParam String nombre,
-			@RequestParam String apellido, @RequestParam String fechaNacimientoString,
-			@RequestParam String detalleDireccion, @RequestParam String sexo, Model model) {
-		Miembro miembro = miembroBO.getMiembroByID(cedula);
-
-		// Check if member is registered
-		if (miembro == null) {
-			model.addAttribute("error", "Cedula no encontrada");
-			return "Miembro/edit";
+	@RequestMapping(value = "/miembro/edit", params = "edit", method = RequestMethod.POST)
+	public String postEdit(@ModelAttribute("miembro") Miembro miembro, Model model) {
+		
+		Miembro miembroOriginal = miembroBO.getMiembroByID(miembro.getCedula());
+		
+		if (miembroOriginal == null) {
+			model.addAttribute("error", "Cedula no encntrada");
+			return "redirect:/miembro/list";
 		}
-
-		model.addAttribute("miembro", miembro);
-
-		return "Miembro/edit";
+		
+		//miembroOriginal.setNombre(miembro.getNombre());
+		
+		miembroBO.update(miembro);
+		model.addAttribute("success", "Guardado con exito!");
+		return ("Miembro/edit");
 	}// END GET EDIT
 
 }

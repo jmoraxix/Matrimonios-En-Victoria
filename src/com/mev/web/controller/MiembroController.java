@@ -66,5 +66,13 @@ public class MiembroController {
 	}// END POST NEW
 
 	
+	////LIST
+	
+	@RequestMapping(value = "/miembro/list", method = RequestMethod.GET)
+	public String getList(Model model) {
+		model.addAttribute(
+				"miembros", miembroBO.listMiembros());
+		return "Miembro/list";
+	}// END GET NEW
 
 }

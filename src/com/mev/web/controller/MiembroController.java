@@ -95,7 +95,7 @@ public class MiembroController {
 		Miembro miembro = miembroBO.getMiembroByID(cedula);
 
 		// Check if member is registered
-		if (miembro == null) {
+		if (miembro == null) 
 			model.addAttribute("error", "Cedula no encontrada");
 			return "redirect:/miembro/list";
 		}

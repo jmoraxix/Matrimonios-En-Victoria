@@ -21,7 +21,7 @@ steps:
     javaHomeOption: 'JDKVersion'
     jdkVersionOption: '1.8'
     jdkArchitectureOption: 'x64'
-    goals: 'clean install -P ballerina'
+    goals: 'clean install'
     mavenVersionOption: 'Path'
     mavenDirectory: '$(build.sourcesdirectory)/maven/apache-maven-3.5.4'
     mavenSetM2Home: true

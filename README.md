@@ -1,5 +1,8 @@
 # Matrimonios-En-Victoria
-Trabajo de Análisis, Diseño e Implementación de Sistemas. Tercer Cuatrimestre, 2018. Ulacit.
+
+[![Build Status](https://dev.azure.com/efloresg934/Matrimonios%20En%20Victoria/_apis/build/status/jmoraxix.Matrimonios-En-Victoria)](https://dev.azure.com/efloresg934/Matrimonios%20En%20Victoria/_build/latest?definitionId=1)
+
+Trabajo de Análisis, Diseño e Implementación de Sistemas. Tercer Cuatrimestre, 2018. Ulacit.
 
 1. Crear un archivo nombrado settings.xml en la carpeta .m2 en su directorio de home con el siguiente contenido:
 ```

@@ -16,4 +16,6 @@ public interface MiembroBO {
 	public Miembro getMiembroByID(String cedula);
 	
 	public Collection<Miembro> listMiembros();
+	
+	public Collection<Miembro> searchMiembros(String cedula, String nombre, String apellido);
 }

@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import com.mev.web.dao.AbstractDAO;
@@ -34,18 +36,37 @@ public class MiembroDAOImpl extends AbstractDAO implements MiembroDAO {
 	@Override
 	public Miembro getMiembroByID(String cedula) {
 		Criteria criteria = getSession().createCriteria(Miembro.class);
+		criteria.add(Restrictions.eq("cedula", cedula));
 		List<Miembro> listaMiembros = (List<Miembro>)criteria.list();
 
-		if (!listaMiembros.isEmpty()){
-			for(Miembro miembroItem : listaMiembros) {
-				//Si el item titne la cedula que estamos buscando, devuelvala
-				if(miembroItem.getCedula().equals(cedula)) {
-					return miembroItem;
-				}
-			}
+		//Revisamos si no hay resultado, en cuyo caso retornamos null
+		if (listaMiembros.isEmpty()){
+			return null;
 		}
-		//Si no hay match, o no hay resultados, devuelve null
-		return null;
+		//Si hay match, retornamos el elemento, en este caso es la 
+		//llave primaria asi que es seguro asumir que solo hay un resultado
+		return listaMiembros.get(0);
+	}
+	@Override
+	public Collection<Miembro> searchMiembros(String cedula, String nombre, String apellido){
+		//Vamos a hacer un like, y no importa si unimos nombre y apellidos (palabras del cliente)
+		//asi que los concatenamos y anadimos el wildcard
+		String cedulaLike = "%" + cedula + "%";
+		String nombreLike = "%" + nombre + "%";
+		String apellidoLike = "%" + apellido + "%";
+		
+		Criteria criteria = getSession().createCriteria(Miembro.class);
+		//Cada Criterion representa una operacion booleana, y se pueden meter dentro de otros Criterions (son recursivos)
+		Criterion nombreMatch = Restrictions.like("nombre", nombreLike);
+		Criterion apellidoMatch = Restrictions.like("apellido", apellidoLike);
+		Criterion cedulaMatch = Restrictions.like("cedula", cedulaLike);
+		
+		//Usamos el metodo OR para retornar lo que cumpla con al menos una
+		Criterion matchTotal = Restrictions.or(nombreMatch, apellidoMatch, cedulaMatch);
+		//Anadimos la condicion al query
+		criteria.add(matchTotal);
+		//Retorno de resultados
+        return (List<Miembro>)criteria.list();
 	}
 
 	@SuppressWarnings("unchecked")

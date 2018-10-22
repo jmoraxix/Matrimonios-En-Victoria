@@ -18,4 +18,6 @@ public interface MiembroDAO {
 	public Collection<Miembro> listMiembros();
 	
 	public Collection<Miembro> searchMiembros(String cedula, String nombre, String apellido);
+	
+	public Collection<Miembro> searchMiembros(String termino);
 }

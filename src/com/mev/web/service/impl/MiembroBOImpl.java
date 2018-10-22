@@ -46,4 +46,9 @@ public class MiembroBOImpl implements MiembroBO {
 	public Collection<Miembro> searchMiembros(String cedula, String nombre, String apellido) {
 		return this.MiembroDAO.searchMiembros(cedula, nombre, apellido);
 	}
+	
+	@Override
+	public Collection<Miembro> searchMiembros(String termino) {
+		return this.MiembroDAO.searchMiembros(termino);
+	}
 }

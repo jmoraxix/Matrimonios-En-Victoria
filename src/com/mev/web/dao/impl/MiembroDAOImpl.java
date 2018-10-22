@@ -49,7 +49,7 @@ public class MiembroDAOImpl extends AbstractDAO implements MiembroDAO {
 	}
 	@Override
 	public Collection<Miembro> searchMiembros(String cedula, String nombre, String apellido){
-		//Vamos a hacer un like, y no importa si unimos nombre y apellidos (palabras del cliente)
+		//Vamos a hacer un like
 		//asi que los concatenamos y anadimos el wildcard
 		String cedulaLike = "%" + cedula + "%";
 		String nombreLike = "%" + nombre + "%";
@@ -60,6 +60,26 @@ public class MiembroDAOImpl extends AbstractDAO implements MiembroDAO {
 		Criterion nombreMatch = Restrictions.like("nombre", nombreLike);
 		Criterion apellidoMatch = Restrictions.like("apellido", apellidoLike);
 		Criterion cedulaMatch = Restrictions.like("cedula", cedulaLike);
+		
+		//Usamos el metodo OR para retornar lo que cumpla con al menos una
+		Criterion matchTotal = Restrictions.or(nombreMatch, apellidoMatch, cedulaMatch);
+		//Anadimos la condicion al query
+		criteria.add(matchTotal);
+		//Retorno de resultados
+        return (List<Miembro>)criteria.list();
+	}
+	
+	@Override
+	public Collection<Miembro> searchMiembros(String termino){
+		//Vamos a hacer un like
+		//asi que los concatenamos y anadimos el wildcard
+		String terminoLike = "%" + termino + "%";
+		
+		Criteria criteria = getSession().createCriteria(Miembro.class);
+		//Cada Criterion representa una operacion booleana, y se pueden meter dentro de otros Criterions (son recursivos)
+		Criterion nombreMatch = Restrictions.like("nombre", termino);
+		Criterion apellidoMatch = Restrictions.like("apellido", termino);
+		Criterion cedulaMatch = Restrictions.like("cedula", termino);
 		
 		//Usamos el metodo OR para retornar lo que cumpla con al menos una
 		Criterion matchTotal = Restrictions.or(nombreMatch, apellidoMatch, cedulaMatch);

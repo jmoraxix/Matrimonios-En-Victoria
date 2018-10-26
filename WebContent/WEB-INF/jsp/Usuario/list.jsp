@@ -46,7 +46,7 @@
 
     <div class="container">
         <br>
-        <h1>Miembros</h1>
+        <h1>Usuarios</h1>
         <br>
         <!-- Example row of columns -->
         <div class="row justify-content-center">
@@ -82,17 +82,17 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="miembro" items="${miembros}">
+                        <c:forEach var="usuario" items="${usuarios}">
                             <tr>
-                                <th scope="row">${miembro.cedula}</th>
-                                <td>${miembro.nombre}</td>
-                                <td>${miembro.apellido}</td>
-                                <td>${miembro.sexo}</td>
+                                <th scope="row">${usuario.cedula}</th>
+                                <td>${usuario.nombre}</td>
+                                <td>${usuario.apellido}</td>
+                                <td>${usuario.sexo}</td>
                                 <td>
-                                    <a href="edit/${miembro.cedula}" class="btn btn-warning">Editar</a>
+                                    <a href="edit/${usuario.cedula}" class="btn btn-warning">Editar</a>
                                 </td>
                                 <td>
-                                    <a href="delete/${miembro.cedula}" class="btn btn-danger">Eliminar</a>
+                                    <a href="delete/${usuario.cedula}" class="btn btn-danger">Eliminar</a>
                                 </td>
                             </tr>
                         </c:forEach>

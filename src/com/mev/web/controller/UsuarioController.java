@@ -6,9 +6,14 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,6 +33,13 @@ public class UsuarioController {
 
 	final static Logger log = Logger.getLogger(UsuarioController.class);
 
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		sdf.setLenient(true);
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
+	}
+	
 	@RequestMapping(value = "/usuario/new", method = RequestMethod.GET)
 	public String getNew(Model model) {
 		model.addAttribute(
@@ -72,12 +84,12 @@ public class UsuarioController {
 
 	/// LOGIN
 
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	@RequestMapping(value = {"/login", "/"}, method = RequestMethod.GET)
 	public String getLogin(Model model) {
 		return "Usuario/login";
 	}// END GET NEW
 
-	@RequestMapping(value = "/login", params = "login", method = RequestMethod.POST)
+	@RequestMapping(value = {"/login", "/"}, params = "login", method = RequestMethod.POST)
 	public String postLogin(@RequestParam String cedula, 
 			@RequestParam String password, Model model) {
 		
@@ -97,6 +109,71 @@ public class UsuarioController {
 			model.addAttribute("error", "Este usuario no existe");
 			return "Usuario/login";
 		}
-	}// END POST NEW
+	}// END POST LOGIN
+	
+	////LIST
+	
+	@RequestMapping(value = "/usuario/list",method = RequestMethod.GET)
+	public String getList(@RequestParam(required = false, defaultValue = "null", value = "error") String error, 
+			@RequestParam(required = false, defaultValue = "null", value = "search") String search, 
+			Model model) {
+		//Por si alguna pagina necesita decir que la cedula esta mal u otro error
+		if(!error.equals("null")) {
+			model.addAttribute("error", error);
+		}
+		
+		if(!(search.equals("null") || search.equals(""))) {
+			model.addAttribute("usuarios", usuarioBO.searchUsuarios(search));
+		} else {
+			model.addAttribute("usuarios", usuarioBO.listUsuarios());
+		}
+		
+		return "Usuario/list";
+	}// END GET LIST
+	
+	@RequestMapping(value = "usuario/list",method = RequestMethod.POST)
+	public String postList(@RequestParam(required = false, defaultValue = "null", value = "search") String search, 
+			Model model) {
+		//Por si alguna pagina necesita decir que la cedula esta mal u otro error
+		if(!(search.equals("null") || search.equals(""))) {
+			model.addAttribute("search", search);
+		}
+		
+		return "redirect:/usuario/list";
+	}// END GET LIST
+	
+////EDIT
+	@RequestMapping(value = "/usuario/edit/{cedula}", method = RequestMethod.GET)
+	public String getEdit(@PathVariable(required = true) String cedula, 
+			Model model) {
+		Usuario usuario = usuarioBO.getUsuarioByID(cedula);
+
+		// Check if member is registered
+		if (usuario == null) {
+			model.addAttribute("error", "Cedula no encontrada");
+			return "redirect:/usuario/list";
+		}
+
+		model.addAttribute("usuario", usuario);
+
+		return "Usuario/edit";
+	}// END GET EDIT
+
+	@RequestMapping(value = "/usuario/edit", params = "edit", method = RequestMethod.POST)
+	public String postEdit(@ModelAttribute("usuario") Usuario usuario, Model model) {
+		
+		Usuario usuarioOriginal = usuarioBO.getUsuarioByID(usuario.getCedula());
+		
+		if (usuarioOriginal == null) {
+			model.addAttribute("error", "Cedula no encntrada");
+			return "redirect:/usuario/list";
+		}
+		
+		//usuarioOriginal.setNombre(usuario.getNombre());
+		
+		usuarioBO.update(usuario);
+		model.addAttribute("success", "Guardado con exito!");
+		return ("usuario/edit");
+	}// END GET EDIT
 
 }

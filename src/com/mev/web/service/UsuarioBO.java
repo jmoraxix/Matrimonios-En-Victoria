@@ -15,4 +15,6 @@ public interface UsuarioBO {
 	public Usuario getUsuarioByID(String cedula);
 	
 	public Collection<Usuario> listUsuarios();
+	
+	public Collection<Usuario> searchUsuarios(String termino);
 }

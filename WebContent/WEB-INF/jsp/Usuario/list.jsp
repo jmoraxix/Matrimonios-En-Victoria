@@ -59,7 +59,7 @@
                     <input name="new" type="hidden" id="search">
 
                     <div class="input-group mb-3">
-                        <input name="search" type="text" class="form-control" placeholder="Cedula, Nombre o Apellidos">
+                        <input name="search" value="${search}" type="text" class="form-control" placeholder="Cedula, Nombre o Apellidos">
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary" type="submit">Buscar</button>
                         </div>

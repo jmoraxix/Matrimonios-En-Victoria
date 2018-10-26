@@ -122,7 +122,11 @@ public class UsuarioController {
 			model.addAttribute("error", error);
 		}
 		
+		//El cliente está buscando o quiere ver todo?
 		if(!(search.equals("null") || search.equals(""))) {
+			//Para que la barra se llene con lo que se busco
+			model.addAttribute("search", search);
+			//Buscamos los que cunplan con el termino de busqueda
 			model.addAttribute("usuarios", usuarioBO.searchUsuarios(search));
 		} else {
 			model.addAttribute("usuarios", usuarioBO.listUsuarios());

@@ -86,7 +86,11 @@ public class MiembroController {
 			model.addAttribute("error", error);
 		}
 		
+		//El cliente esta buscando algo o quiere ver todo
 		if(!(search.equals("null") || search.equals(""))) {
+			//Para que la barra se llene con lo que se busco
+			model.addAttribute("search", search);
+			//Buscamos los que cumplan con el termino de busqueda
 			model.addAttribute("miembros", miembroBO.searchMiembros(search));
 		} else {
 			model.addAttribute("miembros", miembroBO.listMiembros());

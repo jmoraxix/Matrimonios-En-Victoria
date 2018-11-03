@@ -65,7 +65,7 @@ public class UsuarioController {
 		
 		//Check if passwords match
 		if(!password.equals(passwordConfirm)) {
-			model.addAttribute("error", "Las contraseñas no coinciden");
+			model.addAttribute("error", "Las contraseï¿½as no coinciden - Este es el mensaje de la prueba");
 			return "Usuario/new";
 		}
 		
@@ -101,7 +101,7 @@ public class UsuarioController {
 				model.addAttribute("title", "Nuevo Usuario");
 				return "redirect:usuario/new";
 			} else {
-				model.addAttribute("error", "Cedula o contraseña incorrecta");
+				model.addAttribute("error", "Cedula o contraseï¿½a incorrecta");
 				return "Usuario/login";
 			}
 		}else {
@@ -122,11 +122,11 @@ public class UsuarioController {
 			model.addAttribute("error", error);
 		}
 		
-		//El cliente está buscando o quiere ver todo?
+		//El cliente estï¿½ buscando o quiere ver todo?
 		if(!(search.equals("null") || search.equals(""))) {
 			//Para que la barra se llene con lo que se busco
 			model.addAttribute("search", search);
-			//Buscamos los que cunplan con el termino de busqueda
+			//Buscamos los que cumplan con el termino de busqueda
 			model.addAttribute("usuarios", usuarioBO.searchUsuarios(search));
 		} else {
 			model.addAttribute("usuarios", usuarioBO.listUsuarios());

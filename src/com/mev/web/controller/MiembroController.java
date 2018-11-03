@@ -78,14 +78,35 @@ public class MiembroController {
 	//// LIST
 
 	@RequestMapping(value = "/miembro/list",method = RequestMethod.GET)
-	public String getList(@RequestParam(required = false, defaultValue = "null", value = "error") String error, Model model) {
+	public String getList(@RequestParam(required = false, defaultValue = "null", value = "error") String error, 
+			@RequestParam(required = false, defaultValue = "null", value = "search") String search,
+			Model model) {
 		//Por si alguna pagina necesita decir que la cedula esta mal u otro error
 		if(!error.equals("null")) {
 			model.addAttribute("error", error);
 		}
 		
-		model.addAttribute("miembros", miembroBO.listMiembros());
+		//El cliente esta buscando algo o quiere ver todo
+		if(!(search.equals("null") || search.equals(""))) {
+			//Para que la barra se llene con lo que se busco
+			model.addAttribute("search", search);
+			//Buscamos los que cumplan con el termino de busqueda
+			model.addAttribute("miembros", miembroBO.searchMiembros(search));
+		} else {
+			model.addAttribute("miembros", miembroBO.listMiembros());
+		}
+		
 		return "Miembro/list";
+	}// END GET LIST
+	
+	@RequestMapping(value = "miembro/list",method = RequestMethod.POST)
+	public String postList(@RequestParam(required = false, defaultValue = "null", value = "search") String search, Model model) {
+		//Por si alguna pagina necesita decir que la cedula esta mal u otro error
+		if(!(search.equals("null") || search.equals(""))) {
+			model.addAttribute("search", search);
+		}
+		
+		return "redirect:/miembro/list";
 	}// END GET LIST
 
 	//// EDIT

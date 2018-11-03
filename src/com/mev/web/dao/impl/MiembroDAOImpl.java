@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -51,15 +52,15 @@ public class MiembroDAOImpl extends AbstractDAO implements MiembroDAO {
 	public Collection<Miembro> searchMiembros(String cedula, String nombre, String apellido){
 		//Vamos a hacer un like
 		//asi que los concatenamos y anadimos el wildcard
-		String cedulaLike = "%" + cedula + "%";
-		String nombreLike = "%" + nombre + "%";
-		String apellidoLike = "%" + apellido + "%";
+		String cedulaLike = cedula;
+		String nombreLike = nombre;
+		String apellidoLike = apellido;
 		
 		Criteria criteria = getSession().createCriteria(Miembro.class);
 		//Cada Criterion representa una operacion booleana, y se pueden meter dentro de otros Criterions (son recursivos)
-		Criterion nombreMatch = Restrictions.like("nombre", nombreLike);
-		Criterion apellidoMatch = Restrictions.like("apellido", apellidoLike);
-		Criterion cedulaMatch = Restrictions.like("cedula", cedulaLike);
+		Criterion nombreMatch = Restrictions.ilike("nombre", nombreLike, MatchMode.ANYWHERE);
+		Criterion apellidoMatch = Restrictions.ilike("apellido", apellidoLike, MatchMode.ANYWHERE);
+		Criterion cedulaMatch = Restrictions.ilike("cedula", cedulaLike, MatchMode.ANYWHERE);
 		
 		//Usamos el metodo OR para retornar lo que cumpla con al menos una
 		Criterion matchTotal = Restrictions.or(nombreMatch, apellidoMatch, cedulaMatch);
@@ -73,13 +74,13 @@ public class MiembroDAOImpl extends AbstractDAO implements MiembroDAO {
 	public Collection<Miembro> searchMiembros(String termino){
 		//Vamos a hacer un like
 		//asi que los concatenamos y anadimos el wildcard
-		String terminoLike = "%" + termino + "%";
+		String terminoLike = termino;
 		
 		Criteria criteria = getSession().createCriteria(Miembro.class);
 		//Cada Criterion representa una operacion booleana, y se pueden meter dentro de otros Criterions (son recursivos)
-		Criterion nombreMatch = Restrictions.like("nombre", termino);
-		Criterion apellidoMatch = Restrictions.like("apellido", termino);
-		Criterion cedulaMatch = Restrictions.like("cedula", termino);
+		Criterion nombreMatch = Restrictions.ilike("nombre", termino, MatchMode.ANYWHERE);
+		Criterion apellidoMatch = Restrictions.ilike("apellido", termino, MatchMode.ANYWHERE);
+		Criterion cedulaMatch = Restrictions.ilike("cedula", termino, MatchMode.ANYWHERE);
 		
 		//Usamos el metodo OR para retornar lo que cumpla con al menos una
 		Criterion matchTotal = Restrictions.or(nombreMatch, apellidoMatch, cedulaMatch);

@@ -41,4 +41,10 @@ public class UsuarioBOImpl implements UsuarioBO {
 	public Collection<Usuario> listUsuarios() {
 		return this.UsuarioDAO.listUsuarios();
 	}
+
+	@Override
+	public Collection<Usuario> searchUsuarios(String termino) {
+		// TODO Auto-generated method stub
+		return this.UsuarioDAO.searchUsuarios(termino);
+	}
 }

@@ -65,7 +65,7 @@ public class UsuarioController {
 		
 		//Check if passwords match
 		if(!password.equals(passwordConfirm)) {
-			model.addAttribute("error", "Las contrase�as no coinciden - Este es el mensaje de la prueba");
+			model.addAttribute("error", "Las contraseñas no coinciden");
 			return "Usuario/new";
 		}
 		

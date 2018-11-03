@@ -2,27 +2,30 @@ package com.mev.web.model;
 
 import javax.persistence.Table;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Column;
 @Entity
 @Table(name = "DISTRITO")
 public class Distrito {
 	@Id
+	@GeneratedValue //ID autogenerado por la base de datos
 	private int distritoId;
 	@Column
-	private String distrito;
-	@Column
-	private String canton;
+	private String nombre;
 	
+	//Varios distritos tienen un sol canton
+	@ManyToOne(optional = false)
+	private Canton canton;
 	
-
 	public Distrito() {
 		
 	}
 
-	public Distrito(int distritoId, String distrito, String canton) {
-		this.distritoId = distritoId;
-		this.distrito = distrito;
+	public Distrito(String nombre, Canton canton) {
+		super();
+		this.nombre = nombre;
 		this.canton = canton;
 	}
 
@@ -34,28 +37,22 @@ public class Distrito {
 		this.distritoId = distritoId;
 	}
 
-	public String getDistrito() {
-		return distrito;
+	public String getNombre() {
+		return nombre;
 	}
 
-	public void setDistrito(String distrito) {
-		this.distrito = distrito;
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 
-	public String getCanton() {
+	public Canton getCanton() {
 		return canton;
 	}
 
-	public void setCanton(String canton) {
+	public void setCanton(Canton canton) {
 		this.canton = canton;
 	}
 
-	@Override
-	public String toString() {
-		return "Distrito [distritoId=" + distritoId + ", distrito=" + distrito + ", canton=" + canton + "]";
-	}
-	
-	
 	
 	
 }

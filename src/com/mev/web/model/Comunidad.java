@@ -1,57 +1,26 @@
 package com.mev.web.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 @Entity
 @Table(name = "COMUNIDAD")
-public class Comunidad {
+public class Comunidad { //Las comunidades don los lugares físiscos donde toman lugar las reuniones
 	@Id
+	@GeneratedValue  //ID autogenerado por la base de datos
 	private int comunidadId;
+	@OneToOne(optional = false, cascade = CascadeType.ALL)
+	private Distrito distrito;
 	@Column
-	private Distrito ubicacion;
+	private String nombre;
 	@Column
-	private String comunidad;
+	private String detalle;
 	
-public Comunidad() {
-	
-}
-
-public Comunidad(int comunidadId,Distrito ubicacion,String comunidad) {
-	this.comunidadId = comunidadId;
-	this.ubicacion = ubicacion;
-	this.comunidad = comunidad;
-}
-
-public int getComunidadId() {
-	return comunidadId;
-}
-
-public void setComunidadId(int comunidadId) {
-	this.comunidadId = comunidadId;
-}
-
-public Distrito getUbicacion() {
-	return ubicacion;
-}
-
-public void setUbicacion(Distrito ubicacion) {
-	this.ubicacion = ubicacion;
-}
-
-public String getComunidad() {
-	return comunidad;
-}
-
-public void setComunidad(String comunidad) {
-	this.comunidad = comunidad;
-}
-
-@Override
-public String toString() {
-	return "Comunidad [comunidadId=" + comunidadId + ", ubicacion=" + ubicacion + ", comunidad=" + comunidad + "]";
-}
-
-
+	public Comunidad() {
+		
+	}
 }

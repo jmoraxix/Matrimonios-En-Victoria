@@ -112,7 +112,7 @@ public class MiembroController {
 		Miembro miembroOriginal = miembroBO.getMiembroByID(miembro.getCedula());
 		
 		if (miembroOriginal == null) {
-			model.addAttribute("error", "Cedula no encntrada");
+			model.addAttribute("error", "Cedula no encontrada");
 			return "redirect:/miembro/list";
 		}
 		

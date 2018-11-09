@@ -38,8 +38,8 @@ public class CantonBOImpl implements CantonBO {
 	}
 
 	@Override
-	public Collection<Canton> listCantons() {
-		return this.CantonDAO.listCantons();
+	public Collection<Canton> listCantones() {
+		return this.CantonDAO.listCantones();
 	}
 
 }

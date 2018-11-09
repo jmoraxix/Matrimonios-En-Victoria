@@ -14,6 +14,6 @@ public interface CantonBO {
 	
 	public Canton getCantonByID(int CantonId);
 	
-	public Collection<Canton> listCantons();
+	public Collection<Canton> listCantones();
 	
 }

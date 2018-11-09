@@ -14,6 +14,6 @@ public interface CantonDAO {
 	
 	public Canton getCantonByID(int CantonID);
 	
-	public Collection<Canton> listCantons();
+	public Collection<Canton> listCantones();
 	
 }

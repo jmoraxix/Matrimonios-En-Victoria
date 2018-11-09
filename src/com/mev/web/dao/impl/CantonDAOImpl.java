@@ -52,7 +52,7 @@ public class CantonDAOImpl extends AbstractDAO implements CantonDAO {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Collection<Canton> listCantons() {
+	public Collection<Canton> listCantones() {
 		Criteria criteria = getSession().createCriteria(Canton.class);
         return (List<Canton>)criteria.list();
 	}

@@ -51,7 +51,7 @@ public class CantonController {
 	}
 
 	@RequestMapping(value = "/canton/new", method = RequestMethod.GET)
-	public String getNew(Model model) {
+	public String getNew(Model model) 
 		model.addAttribute("cantones", cantonBO.listCantones());
 		model.addAttribute("provincias", provinciaBO.listProvincias());
 		model.addAttribute("cantonForm", new newCantonForm());

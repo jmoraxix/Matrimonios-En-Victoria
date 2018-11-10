@@ -5,7 +5,7 @@
 <html>
 
 <head>
-	<title>Cantons</title>
+	<title>Cantones</title>
 	<jsp:include page="../layout/header.jsp" />
 </head>
 

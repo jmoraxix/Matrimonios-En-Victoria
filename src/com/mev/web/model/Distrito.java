@@ -1,10 +1,18 @@
 package com.mev.web.model;
 
 import javax.persistence.Table;
+
+import antlr.collections.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 @Entity
 @Table(name = "DISTRITO")
@@ -18,6 +26,9 @@ public class Distrito {
 	//Varios distritos tienen un sol canton
 	@ManyToOne(optional = false)
 	private Canton canton;
+	
+	@OneToMany(mappedBy = "distrito", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<Comunidad> comunidades;
 	
 	public Distrito() {
 		
@@ -51,6 +62,14 @@ public class Distrito {
 
 	public void setCanton(Canton canton) {
 		this.canton = canton;
+	}
+
+	public Set<Comunidad> getComunidades() {
+		return comunidades;
+	}
+
+	public void setComunidades(Set<Comunidad> comunidades) {
+		this.comunidades = comunidades;
 	}
 
 	

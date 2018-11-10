@@ -23,6 +23,7 @@ public class ComunidadDAOImpl extends AbstractDAO implements ComunidadDAO {
 	@Override
 	public void save(Comunidad Comunidad) {
 		persist(Comunidad);
+		getSession().flush();
 	}
 
 	@Override

@@ -23,6 +23,7 @@ public class ProvinciaDAOImpl extends AbstractDAO implements ProvinciaDAO {
 	@Override
 	public void save(Provincia Provincia) {
 		persist(Provincia);
+		getSession().flush();
 	}
 
 	@Override

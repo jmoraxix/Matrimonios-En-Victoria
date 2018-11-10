@@ -23,6 +23,7 @@ public class DistritoDAOImpl extends AbstractDAO implements DistritoDAO {
 	@Override
 	public void save(Distrito Distrito) {
 		persist(Distrito);
+		getSession().flush();
 	}
 
 	@Override

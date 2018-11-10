@@ -5,7 +5,7 @@
 <html>
 
 <head>
-	<title>Cantons</title>
+	<title>Distritos</title>
 	<jsp:include page="../layout/header.jsp" />
 </head>
 
@@ -16,21 +16,21 @@
 
     <div class="container">
         <br>
-        <h1>Nuevo Canton</h1>
+        <h1>Nuevo Distrito</h1>
         <br>
         <!-- Example row of columns -->
         <div class="row justify-content-center">
             <div class="col-md-9 col sm-12">
-            	<form:form method="post" servletRelativeAction="/canton/new" modelAttribute="cantonForm">
+            	<form:form method="post" servletRelativeAction="/distrito/new" modelAttribute="distritoForm">
                 		<div><span class="text-danger">${error}</span><div>
                 		<div><span class="text-success">${success}</span><div>
                         <div class="input-group">
 						  <div class="input-group-prepend">
-						    <span class="input-group-text">Provincia y Nombre</span>
+						    <span class="input-group-text">Cantón y Nombre</span>
 						  </div>
-						  <form:select path="provinciaId" class="form-control">
-							  <form:option value="null" label="--- Provincia ---" />
-							  <form:options items="${provincias}" itemLabel="nombre" itemValue="provinciaId" />
+						  <form:select path="cantonId" class="form-control">
+							  <form:option value="null" label="--- Cantón ---" />
+							  <form:options items="${cantones}" itemLabel="nombre" itemValue="cantonId" />
 				       	  </form:select>
 						  <form:input path="nombre" placeholder="Nombre" type="text" aria-label="Last name" class="form-control"/>
 						</div>
@@ -41,7 +41,7 @@
         </div>
         
         <hr/>
-        <h4>Todos los Cantones<h4/>
+        <h4>Todos los Distritos<h4/>
         <div class="row justify-content-center">
             <div class="table-responsive-sm">
                 <table class="table">
@@ -49,18 +49,20 @@
                         <tr>
                             <th scope="col">ID</th>
                             <th scope="col">Nombre</th>
+                            <th scope="col">Canton</th>
                             <th scope="col">Provincia</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="canton" items="${cantones}">
+                        <c:forEach var="distrito" items="${distritos}">
                             <tr>
-                                <th scope="row">${canton.cantonId}</th>
-                                <td>${canton.nombre}</td>
-                                <td>${canton.provincia.nombre}</td>
+                                <th scope="row">${distrito.distritoId}</th>
+                                <td>${distrito.nombre}</td>
+                                <td>${distrito.canton.nombre}</td>
+                                <td>${distrito.canton.provincia.nombre}</td>
                                 <!--
                                 <td>
-                                    <a href="delete/${canton.cantonId}" class="btn btn-danger">Eliminar</a>
+                                    <a href="delete/${distrito.distritoId}" class="btn btn-danger">Eliminar</a>
                                 </td>
                                 -->
                             </tr>

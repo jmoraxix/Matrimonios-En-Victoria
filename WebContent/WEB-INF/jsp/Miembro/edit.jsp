@@ -27,20 +27,20 @@
                 		<div><span class="text-success">${success}</span><div>
                         <div class="form-group">
                             <label for="cedula">Cedula</label>
-                        	<form:input type="number" path="cedula" readonly="true" min="1" max="9999999999" required="" class="form-control" id="cedula" placeholder="Cedula"/>
+                        	<form:input type="number" path="cedula" readonly="true" min="1" max="9999999999" required="required" class="form-control" id="cedula" placeholder="Cedula"/>
                         </div>
                         <div class="form-group">
                             <label for="nombre">Nombre</label>
-                            <form:input type="text" path="nombre" required="" class="form-control" id="nombre" placeholder="Nombre"/>
+                            <form:input type="text" path="nombre" required="required" class="form-control" id="nombre" placeholder="Nombre"/>
                         </div>
                         <div class="form-group">
                             <label for="apellidoUno">Apellido</label>
-                            <form:input type="text" path="apellido" required="" class="form-control" id="apellido" placeholder="Apellido"/>
+                            <form:input type="text" path="apellido" required="required" class="form-control" id="apellido" placeholder="Apellido"/>
                         </div>
    
                         <div class="form-group">
                             <label for="fechaNacimientoString">Fecha de Nacimiento</label>
-                            <form:input type="date" path="fechaNacimiento" required="" class="form-control" />
+                            <form:input type="date" path="fechaNacimiento" required="required" class="form-control" />
                         </div>
                         
                         <div class="form-check">
@@ -58,7 +58,7 @@
                         
                         <div class="form-group">
                             <label for="exampleInputEmail1">Detalle de Direccion</label>
-                            <form:textarea path="detalleDireccion" required="" class="form-control" name="detalleDireccion" cols="30" rows="5" item-width="100%"/>
+                            <form:textarea path="detalleDireccion" required="required" class="form-control" name="detalleDireccion" cols="30" rows="5" item-width="100%"/>
                         </div>
                         <button type="submit" class="btn btn-primary">Guardar</button>
         

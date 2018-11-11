@@ -1,3 +1,7 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+
 <html>
 
 <head>
@@ -18,44 +22,46 @@
         <!-- Example row of columns -->
         <div class="row justify-content-center">
             <div class="col-md-9 col sm-12">
-                <form action="new" method="post">
-                        <input name="new" type="hidden" id="new">
+                <form:form method="post" servletRelativeAction="/usuario/new" modelAttribute="usuario">
+                        <input name="edit" type="hidden" id="edit">
                 		<div><span class="text-danger">${error}</span><div>
                 		<div><span class="text-success">${success}</span><div>
+                		<form:input type="hidden" path="upgrade"/>
+                		
                         <div class="form-group">
                             <label for="cedula">Cedula</label>
-                            <input min="1" max="9999999999" required name="cedula" type="number" class="form-control" id="cedula" placeholder="Cedula">
+                        	<form:input type="number" path="cedula" min="1" max="9999999999" required="required" class="form-control" id="cedula" placeholder="Cedula"/>
                         </div>
                         <div class="form-group">
                             <label for="password">Contraseña</label>
-                            <input required name="password" type="password" class="form-control" id="password" aria-describedby="emailHelp" placeholder="Contraseña">
+                            <form:input type="password" path="contrasena" required="required" class="form-control" id="contrasena" placeholder="Contraseña"/>
                         </div>
                         <div class="form-group">
                             <label for="password">Confirmar Contraseña</label>
-                            <input required name="passwordConfirm" type="password" class="form-control" id="passwordConfirm" placeholder="Confirmar Contraseña">
-                        </div>
+                            <form:input type="password" path="confirmarContrasena" required="required" class="form-control" id="contrasena" placeholder="Confirmar Contraseña"/>
+						</div>
                         <div class="form-group">
                             <label for="nombre">Nombre</label>
-                            <input required name="nombre" type="text" class="form-control" id="nombre" placeholder="Nombre">
+                            <form:input type="text" path="nombre" required="required" class="form-control" id="nombre" placeholder="Nombre"/>
                         </div>
                         <div class="form-group">
                             <label for="apellidoUno">Apellido</label>
-                            <input required name="apellido" type="text" class="form-control" id="apellido" placeholder="Apellido">
+                            <form:input type="text" path="apellido" required="required" class="form-control" id="apellido" placeholder="Apellido"/>
                         </div>
    
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Fecha de Nacimiento</label>
-                            <input required name="fechaNacimientoString" type="date" class="form-control" id="fechaNacimientoString" placeholder="Fecha de Nacimiento">
+                            <label for="fechaNacimientoString">Fecha de Nacimiento</label>
+                            <form:input type="date" path="fechaNacimiento" required="required" class="form-control" />
                         </div>
                         
                         <div class="form-check">
-						  <input class="form-check-input" type="radio" name="sexo" id="rdioMasculino" value="m" checked>
+						  <form:radiobutton path="sexo" value="m" />
 						  <label class="form-check-label" for="rdioMasculino">
 						    Masculino
 						  </label>
 						</div>
 						<div class="form-check">
-						  <input class="form-check-input" type="radio" name="sexo" id="rdioFemenino" value="f">
+						<form:radiobutton path="sexo" value="f" />
 						  <label class="form-check-label" for="rdioFemenino">
 						    Femenino
 						  </label>
@@ -63,11 +69,11 @@
                         
                         <div class="form-group">
                             <label for="exampleInputEmail1">Detalle de Direccion</label>
-                            <textarea required name="detalleDireccion" class="form-control" name="detalleDireccion" cols="30" rows="5" item-width="100%"></textarea>
+                            <form:textarea path="detalleDireccion" required="required" class="form-control" name="detalleDireccion" cols="30" rows="5" item-width="100%"/>
                         </div>
-                        <button type="submit" class="btn btn-primary">Crear</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
         
-                </form>
+                </form:form>
             </div>
         </div>
 

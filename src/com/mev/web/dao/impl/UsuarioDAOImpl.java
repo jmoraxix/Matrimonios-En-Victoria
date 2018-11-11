@@ -24,6 +24,11 @@ public class UsuarioDAOImpl extends AbstractDAO implements UsuarioDAO {
 	public void save(Usuario Usuario) {
 		persist(Usuario);
 	}
+	
+	@Override
+	public void saveOrUpdate(Usuario Usuario) {
+		getSession().saveOrUpdate(Usuario);
+	}
 
 	@Override
 	public void update(Usuario Usuario) {
@@ -38,18 +43,16 @@ public class UsuarioDAOImpl extends AbstractDAO implements UsuarioDAO {
 	@Override
 	public Usuario getUsuarioByID(String cedula) {
 		Criteria criteria = getSession().createCriteria(Usuario.class);
+		criteria.add(Restrictions.eq("cedula", cedula));
 		List<Usuario> listaUsuarios = (List<Usuario>)criteria.list();
 
-		if (!listaUsuarios.isEmpty()){
-			for(Usuario UsuarioItem : listaUsuarios) {
-				//Si el item titne la cedula que estamos buscando, devuelvala
-				if(UsuarioItem.getCedula().equals(cedula)) {
-					return UsuarioItem;
-				}
-			}
+		//Revisamos si no hay resultado, en cuyo caso retornamos null
+		if (listaUsuarios.isEmpty()){
+			return null;
 		}
-		//Si no hay match, o no hay resultados, devuelve null
-		return null;
+		//Si hay match, retornamos el elemento, en este caso es la 
+		//llave primaria asi que es seguro asumir que solo hay un resultado
+		return listaUsuarios.get(0);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -65,11 +68,12 @@ public class UsuarioDAOImpl extends AbstractDAO implements UsuarioDAO {
 		//asi que los concatenamos y anadimos el wildcard
 		String terminoLike = termino;
 		
-		Criteria criteria = getSession().createCriteria(Usuario.class);
+		Criteria criteria = getSession().createCriteria(Usuario.class)
+				.createAlias("miembro", "m");
 		//Cada Criterion representa una operacion booleana, y se pueden meter dentro de otros Criterions (son recursivos)
-		Criterion nombreMatch = Restrictions.ilike("nombre", termino, MatchMode.ANYWHERE);
-		Criterion apellidoMatch = Restrictions.ilike("apellido", termino, MatchMode.ANYWHERE);
-		Criterion cedulaMatch = Restrictions.ilike("cedula", termino, MatchMode.ANYWHERE);
+		Criterion nombreMatch = Restrictions.ilike("m.nombre", termino, MatchMode.ANYWHERE);
+		Criterion apellidoMatch = Restrictions.ilike("m.apellido", termino, MatchMode.ANYWHERE);
+		Criterion cedulaMatch = Restrictions.ilike("m.cedula", termino, MatchMode.ANYWHERE);
 		
 		//Usamos el metodo OR para retornar lo que cumpla con al menos una
 		Criterion matchTotal = Restrictions.or(nombreMatch, apellidoMatch, cedulaMatch);

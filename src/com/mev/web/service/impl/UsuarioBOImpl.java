@@ -23,6 +23,11 @@ public class UsuarioBOImpl implements UsuarioBO {
 	}
 
 	@Override
+	public void saveOrUpdate(Usuario Usuario) {
+		this.UsuarioDAO.saveOrUpdate(Usuario);
+	}
+	
+	@Override
 	public void update(Usuario Usuario) {
 		this.UsuarioDAO.update(Usuario);
 	}

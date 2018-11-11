@@ -53,9 +53,9 @@
                         <c:forEach var="usuario" items="${usuarios}">
                             <tr>
                                 <th scope="row">${usuario.cedula}</th>
-                                <td>${usuario.nombre}</td>
-                                <td>${usuario.apellido}</td>
-                                <td>${usuario.sexo}</td>
+                                <td>${usuario.miembro.nombre}</td>
+                                <td>${usuario.miembro.apellido}</td>
+                                <td>${usuario.miembro.sexo}</td>
                                 <td>
                                     <a href="edit/${usuario.cedula}" class="btn btn-warning">Editar</a>
                                 </td>

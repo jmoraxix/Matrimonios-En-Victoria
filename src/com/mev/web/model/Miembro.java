@@ -2,6 +2,7 @@ package com.mev.web.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -11,10 +12,11 @@ import javax.persistence.Table;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.InheritanceType;
+import javax.persistence.OneToOne;
 
 @Entity
 @Table(name = "MIEMBRO")
-@Inheritance(strategy=InheritanceType.JOINED)
+//@Inheritance(strategy=InheritanceType.JOINED)
 public class Miembro {
 	@Id
 	private String cedula;
@@ -29,6 +31,17 @@ public class Miembro {
 	private String detalleDireccion;
 	@Column
 	private String Sexo;
+	
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "miembro")
+    private Usuario usuario; 
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 
 	public Miembro() {
 		//super();

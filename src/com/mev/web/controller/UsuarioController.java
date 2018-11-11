@@ -25,11 +25,15 @@ import com.mev.web.service.CategoriaBO;
 import com.mev.web.service.MiembroBO;
 import com.mev.web.service.UsuarioBO;
 
+import forms.newUsuarioForm;
+
 @Controller
 public class UsuarioController {
 
 	 @Autowired
 	 private UsuarioBO usuarioBO;
+	 @Autowired
+	 private MiembroBO miembroBO;
 
 	final static Logger log = Logger.getLogger(UsuarioController.class);
 
@@ -41,45 +45,82 @@ public class UsuarioController {
 	}
 	
 	@RequestMapping(value = "/usuario/new", method = RequestMethod.GET)
-	public String getNew(Model model) {
-		model.addAttribute(
-				"title", "Nuevo Usuario");
+	public String getNew(@RequestParam(required = false, defaultValue = "null", value = "upgrade") String upgrade,
+			Model model) {
+		model.addAttribute("title", "Nuevo Usuario");
+		
+		newUsuarioForm usuario = new newUsuarioForm();
+		if(!upgrade.equals("null")) {
+			Miembro miembro = miembroBO.getMiembroByID(upgrade);
+			usuario.setCedula(miembro.getCedula());
+			usuario.setNombre(miembro.getNombre());
+			usuario.setApellido(miembro.getApellido());
+			usuario.setSexo(miembro.getSexo());
+			usuario.setFechaNacimiento(miembro.getFechaNacimiento());
+			usuario.setDetalleDireccion(miembro.getDetalleDireccion());
+			usuario.setUpgrade(true);
+		}else 
+		{
+			usuario.setUpgrade(false);
+		}
+
+		model.addAttribute("usuario", usuario);
+		
 		return "Usuario/new";
 	}// END GET NEW
 
-	@RequestMapping(value = "/usuario/new", params = "new", method = RequestMethod.POST)
-	public String postNew(@RequestParam String cedula, @RequestParam String password,
-			@RequestParam String passwordConfirm, @RequestParam String nombre, @RequestParam String apellido
-			, @RequestParam String fechaNacimientoString,
-			@RequestParam String detalleDireccion, @RequestParam String sexo, Model model) {
+	@RequestMapping(value = "/usuario/new", method = RequestMethod.POST)
+	public String postNew(@ModelAttribute("usuario") newUsuarioForm usuarioForm, Model model) {
 		
-		Date fechaNacimiento;
-		//Convert parameter date to actual date object
-		try {
-			fechaNacimiento = new SimpleDateFormat("yyyy-MM-dd").parse(fechaNacimientoString);
-		} catch (ParseException e) {
-			e.printStackTrace();
-			model.addAttribute("error", e.toString());
-			return "Usuario/new";
-		}  
+		Usuario usuarioOriginal = usuarioBO.getUsuarioByID(usuarioForm.getCedula());
 		
-		//Check if passwords match
-		if(!password.equals(passwordConfirm)) {
-			model.addAttribute("error", "Las contraseñas no coinciden");
+		//validar que no exista
+		if (usuarioOriginal != null) {
+			model.addAttribute("error", "Usuario ya existe");
 			return "Usuario/new";
 		}
 		
-		//Check if user already exists
-		if(usuarioBO.getUsuarioByID(cedula) != null) {
-			model.addAttribute("error", "La cedula ya esta registrada");
+		//Validar las contrasenas
+		if(!usuarioForm.getContrasena().equals(usuarioForm.getConfirmarContrasena())) 
+		{
+			model.addAttribute("error", "Las contrasenas no coinciden");
 			return "Usuario/new";
 		}
 		
-		//Create user object
-		Usuario usuario = new Usuario(cedula, nombre, apellido, fechaNacimiento, detalleDireccion, sexo, password);
-		usuarioBO.save(usuario);
+				
+		if(usuarioForm.getUpgrade()) 
+		{
+			Miembro miembro = miembroBO.getMiembroByID(usuarioForm.getCedula());
+			Usuario usuarioUpgrade = new Usuario();
+			
+			miembro.setNombre(usuarioForm.getNombre());
+			miembro.setApellido(usuarioForm.getApellido());
+			miembro.setFechaNacimiento(usuarioForm.getFechaNacimiento());
+			miembro.setSexo((usuarioForm.getSexo()));
+			miembro.setDetalleDireccion(usuarioForm.getDetalleDireccion());
+			usuarioUpgrade.setMiembro(miembro);
+			usuarioUpgrade.setContrasena(usuarioForm.getContrasena());
+			
+			usuarioBO.saveOrUpdate(usuarioUpgrade);
+			//miembroBO.update(miembro);
+		}
+		else
+		{
+			Miembro miembro = new Miembro();
+			Usuario usuarioInsert = new Usuario();
+			
+			miembro.setNombre(usuarioForm.getNombre());
+			miembro.setApellido(usuarioForm.getApellido());
+			miembro.setFechaNacimiento(usuarioForm.getFechaNacimiento());
+			miembro.setSexo((usuarioForm.getSexo()));
+			miembro.setDetalleDireccion(usuarioForm.getDetalleDireccion());
+			usuarioInsert.setMiembro(miembro);
+			usuarioInsert.setContrasena(usuarioForm.getContrasena());
+			
+			usuarioBO.save(usuarioInsert);
+		}
 		model.addAttribute("success", "Guardado con exito!");
-		return("Usuario/new");
+		return ("Usuario/new");
 	}// END POST NEW
 
 	/// LOGIN
@@ -101,7 +142,7 @@ public class UsuarioController {
 				model.addAttribute("title", "Nuevo Usuario");
 				return "redirect:usuario/new";
 			} else {
-				model.addAttribute("error", "Cedula o contrase�a incorrecta");
+				model.addAttribute("error", "Cedula o contraseña incorrecta");
 				return "Usuario/login";
 			}
 		}else {
@@ -151,33 +192,39 @@ public class UsuarioController {
 	public String getEdit(@PathVariable(required = true) String cedula, 
 			Model model) {
 		Usuario usuario = usuarioBO.getUsuarioByID(cedula);
-
+		
 		// Check if member is registered
 		if (usuario == null) {
 			model.addAttribute("error", "Cedula no encontrada");
 			return "redirect:/usuario/list";
 		}
-
-		model.addAttribute("usuario", usuario);
+		newUsuarioForm usuarioForm = new newUsuarioForm(usuario);
+		model.addAttribute("usuario", usuarioForm);
 
 		return "Usuario/edit";
 	}// END GET EDIT
 
 	@RequestMapping(value = "/usuario/edit", params = "edit", method = RequestMethod.POST)
-	public String postEdit(@ModelAttribute("usuario") Usuario usuario, Model model) {
+	public String postEdit(@ModelAttribute("usuario") newUsuarioForm usuarioForm, Model model) {
 		
-		Usuario usuarioOriginal = usuarioBO.getUsuarioByID(usuario.getCedula());
+		Usuario usuarioOriginal = usuarioBO.getUsuarioByID(usuarioForm.getCedula());
 		
 		if (usuarioOriginal == null) {
 			model.addAttribute("error", "Cedula no encntrada");
 			return "redirect:/usuario/list";
 		}
 		
-		//usuarioOriginal.setNombre(usuario.getNombre());
+		Miembro miembro = usuarioOriginal.getMiembro();
+		miembro.setNombre(usuarioForm.getNombre());
+		miembro.setApellido(usuarioForm.getApellido());
+		miembro.setFechaNacimiento(usuarioForm.getFechaNacimiento());
+		miembro.setSexo((usuarioForm.getSexo()));
+		miembro.setDetalleDireccion(usuarioForm.getDetalleDireccion());
+		usuarioOriginal.setMiembro(miembro);
 		
-		usuarioBO.update(usuario);
+		usuarioBO.update(usuarioOriginal);
 		model.addAttribute("success", "Guardado con exito!");
-		return ("usuario/edit");
+		return ("Usuario/edit");
 	}// END GET EDIT
 
 }

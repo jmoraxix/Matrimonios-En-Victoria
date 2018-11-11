@@ -62,7 +62,9 @@
                                     <a href="edit/${miembro.cedula}" class="btn btn-warning">Editar</a>
                                 </td>
                                 <td>
-                                    <a href="delete/${miembro.cedula}" class="btn btn-danger">Eliminar</a>
+                                	<c:if test="${miembro.getUsuario() == null}">
+                                    <a href="../usuario/new?upgrade=${miembro.cedula}" class="btn btn-primary">Volver Usuario</a>
+                                	</c:if>
                                 </td>
                             </tr>
                         </c:forEach>

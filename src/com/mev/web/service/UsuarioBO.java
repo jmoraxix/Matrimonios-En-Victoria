@@ -8,6 +8,8 @@ public interface UsuarioBO {
 	
 	public void save(Usuario Usuario);
 	
+	public void saveOrUpdate(Usuario Usuario);
+	
 	public void update(Usuario Usuario);
 	
 	public void delete(Usuario Usuario);

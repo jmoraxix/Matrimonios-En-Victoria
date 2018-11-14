@@ -37,6 +37,11 @@ public class HibernateConfiguration {
      
     @Bean
     public DataSource dataSource() {
+    	String user;
+    	String password;
+    	String server;
+    	String port;
+    	
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(environment.getRequiredProperty("jdbc.driverClassName"));
         dataSource.setUrl(environment.getRequiredProperty("jdbc.url"));//MYSQLCONNSTR_localdb

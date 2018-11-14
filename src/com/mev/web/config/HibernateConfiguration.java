@@ -1,6 +1,9 @@
 package com.mev.web.config;
 
 
+import java.io.BufferedWriter;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.util.Properties;
 
 import javax.sql.DataSource;
@@ -38,8 +41,6 @@ public class HibernateConfiguration {
     @Bean
     public DataSource dataSource() {
     	String connectString = System.getenv("MYSQLCONNSTR_localdb");
-
-        response.getWriter().append("connectString: " + connectString);
 
         String database = "";
         String port = "";

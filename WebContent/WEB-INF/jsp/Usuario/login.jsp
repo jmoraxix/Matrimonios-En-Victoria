@@ -8,7 +8,7 @@
 
     <div class="container h-100" ">
         <div class="row justify-content-center align-items-center h-100 ">
-            <div class="col-md-4 card ">
+            <div class="col-md-4 col-sm-12 card ">
                 <form action="login" method="post">
                     <input type="hidden" name="login" value="login">
                         <div class="card-body">

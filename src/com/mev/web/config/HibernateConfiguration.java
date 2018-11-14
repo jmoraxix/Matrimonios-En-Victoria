@@ -37,16 +37,41 @@ public class HibernateConfiguration {
      
     @Bean
     public DataSource dataSource() {
-    	String user;
-    	String password;
-    	String server;
-    	String port;
+    	String connectString = System.getenv("MYSQLCONNSTR_localdb");
+
+        response.getWriter().append("connectString: " + connectString);
+
+        String database = "";
+        String port = "";
+        String username = "";
+        String password = "";
+
+        String[] strArray = connectString.split(";");
+        for (int i = 0; i < strArray.length; i++) {
+            String[] paramArray = strArray[i].split("=");
+            switch (i) {
+            case 0:
+                database = paramArray[1];
+                continue;
+            case 1:
+                port = paramArray[1];
+                continue;
+            case 2:
+                username = paramArray[1];
+                continue;
+            case 3:
+                password = paramArray[1];
+                continue;
+            }
+        }
+
+        String url = "jdbc:mysql://" + port + "/" + database + "?useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
     	
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(environment.getRequiredProperty("jdbc.driverClassName"));
-        dataSource.setUrl(environment.getRequiredProperty("jdbc.url"));//MYSQLCONNSTR_localdb
-        dataSource.setUsername(environment.getRequiredProperty("jdbc.username"));
-        dataSource.setPassword(environment.getRequiredProperty("jdbc.password"));
+        dataSource.setUrl(url);//MYSQLCONNSTR_localdb
+        dataSource.setUsername(username);
+        dataSource.setPassword(password);
         return dataSource;
     }
      

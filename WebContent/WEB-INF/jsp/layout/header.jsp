@@ -12,7 +12,7 @@
 
 <!-- BOOTSTRAP -->
 <script type="text/javascript"
-	src="../static/js/commons/bootstrap/bootstrap.min.js"></script>
+	src="/MatrimoniosEnVictoria/static/js/commons/bootstrap/bootstrap.min.js"></script>
 
 <!-- DATATABLES -->
 <script type="text/javascript"

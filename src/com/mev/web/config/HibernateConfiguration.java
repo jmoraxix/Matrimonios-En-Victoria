@@ -39,9 +39,9 @@ public class HibernateConfiguration {
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(environment.getRequiredProperty("jdbc.driverClassName"));
-        dataSource.setUrl(System.getenv("MYSQLCONNSTR_localdb"));//MYSQLCONNSTR_localdb
-        //dataSource.setUsername(environment.getRequiredProperty("jdbc.username"));
-        //dataSource.setPassword(environment.getRequiredProperty("jdbc.password"));
+        dataSource.setUrl(environment.getRequiredProperty("jdbc.url"));//MYSQLCONNSTR_localdb
+        dataSource.setUsername(environment.getRequiredProperty("jdbc.username"));
+        dataSource.setPassword(environment.getRequiredProperty("jdbc.password"));
         return dataSource;
     }
      

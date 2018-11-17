@@ -15,16 +15,21 @@ public class GrupoBOTest {
 @Autowired
 private GrupoBO grupoBO;
 	
-	@Test(expected = NullPointerException.class)
+	/*@Test(expected = NullPointerException.class)
 	public void ListaVacia() {
 		Collection<Grupo> listaGrupo = this.grupoBO.listGrupos();
 		assertNull("Retorno de Grupos Nulo",listaGrupo);
-	}
+	}*/
 	
 	@Test
 	public void ListaNoVacia() {
+		try {
 		Collection<Grupo> listaGrupo = this.grupoBO.listGrupos();
 		assertNotNull("Retorno de Grupos NO Nulo",listaGrupo);
+	}catch(Exception e) {
+		System.err.println("Excepcion durante Consulta de Cantones");
+		fail(); 		
 	}
 
+}
 }

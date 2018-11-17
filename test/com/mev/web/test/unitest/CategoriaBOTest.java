@@ -15,15 +15,21 @@ public class CategoriaBOTest {
 	@Autowired
 	private CategoriaBO categoriaBO;
 	
-	@Test(expected = NullPointerException.class)
+	/*@Test(expected = NullPointerException.class)
 	public void ListaVacia() {
 		Collection<Categoria> listaCategoria = this.categoriaBO.listCategorias();
 		assertNull("Retorno de Categoria NULO", listaCategoria);	
-	}
+	}*/
 	
 	@Test
 	public void ListaNoVacia() {
-		Collection<Categoria> listaCategoria = this.categoriaBO.listCategorias();
-		assertNotNull("Retorno de Categoria NO NULO", listaCategoria);	
+		try {
+			Categoria cate = new Categoria();
+			Collection<Categoria> listaCategoria = this.categoriaBO.listCategorias();
+			assertNotNull("Retorno de Categoria NO NULO", listaCategoria);	
+		}catch(Exception e) {
+			System.err.println("Excepcion durante Consulta de Cantones");
+			fail(); 		
+		}
 	}
 }

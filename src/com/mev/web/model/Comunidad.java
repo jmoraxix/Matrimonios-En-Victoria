@@ -24,6 +24,25 @@ public class Comunidad { //Las comunidades don los lugares físiscos donde toman
 	public Comunidad() {
 		
 	}
+	
+	
+
+	public Comunidad(int comunidadId, Distrito distrito, String nombre, String detalle) {
+		super();
+		this.comunidadId = comunidadId;
+		this.distrito = distrito;
+		this.nombre = nombre;
+		this.detalle = detalle;
+	}
+	
+	public Comunidad(Distrito distrito, String nombre, String detalle) {
+		super();
+		this.distrito = distrito;
+		this.nombre = nombre;
+		this.detalle = detalle;
+	}
+
+
 
 	public int getComunidadId() {
 		return comunidadId;

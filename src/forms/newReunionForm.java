@@ -30,7 +30,7 @@ public class newReunionForm {
 	}
 	
 	public Date parseFecha() throws ParseException {
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/MMM/yyyy HH:mm");
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         return formatter.parse(this.fechaString);
 	}
 }

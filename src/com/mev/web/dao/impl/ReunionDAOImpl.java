@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -51,7 +52,7 @@ public class ReunionDAOImpl extends AbstractDAO implements ReunionDAO {
 	@Override
 	public Collection<Reunion> listReuniones() {
 		Criteria criteria = getSession().createCriteria(Reunion.class);
-        return (List<Reunion>)criteria.list();
+        return (List<Reunion>)criteria.addOrder(Order.desc("fecha")).list();
 	}
 	
 }

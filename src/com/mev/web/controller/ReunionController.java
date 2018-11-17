@@ -91,7 +91,7 @@ public class ReunionController {
 		}catch(Exception e) {
 			model.addAttribute("error", "Ocurrió un error al insertar");
 		}
-		return ("redirect:reunion/new");
+		return ("redirect:/reunion/new");
 	}// END POST NEW
 
 	

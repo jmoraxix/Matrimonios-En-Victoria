@@ -1,5 +1,7 @@
 package com.mev.web.model;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -32,6 +34,11 @@ public class Reunion {
 	@JoinTable(name="ASISTENCIA")
 	private Collection<Miembro> asistentes = new ArrayList<Miembro>();
 
+	public String fechaFormateada(){
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		return df.format(this.fecha);
+	}
+	
 	public int getReunionId() {
 		return reunionId;
 	}

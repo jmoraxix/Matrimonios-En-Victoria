@@ -25,7 +25,7 @@
         <!-- Example row of columns -->
         <div class="row justify-content-center">
             <div class="col-md-9 col sm-12">
-            	<form:form method="post" servletRelativeAction="/comunidad/new" modelAttribute="reunionForm">
+            	<form:form method="post" servletRelativeAction="/reunion/new" modelAttribute="reunionForm">
                 		<div><span class="text-danger">${error}</span><div>
                 		<div><span class="text-success">${success}</span><div>
                         <div class="input-group">
@@ -66,26 +66,24 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Distrito</th>
-                            <th scope="col">Canton</th>
-                            <th scope="col">Provincia</th>
+                        	<th scope="col">#</th>
+                            <th scope="col">Grupo</th>
+                            <th scope="col">Comunidad</th>
+                            <th scope="col">Fecha</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="comunidad" items="${reuniones}">
+                        <c:forEach var="reunion" items="${reuniones}">
                             <tr>
-                                <th scope="row">${comunidad.comunidadId}</th>
-                                <td>${comunidad.nombre}</td>
-                                <td>${comunidad.distrito.nombre}</td>
-                                <td>${comunidad.distrito.canton.nombre}</td>
-                                <td>${comunidad.distrito.canton.provincia.nombre}</td>
-                                <!--
+                                <th scope="row">${reunion.reunionId}</th>
+                                <td>${reunion.grupo.nombre}</td>
+                                <td>${reunion.comunidad.nombre}</td>
+                                <td>${reunion.fechaFormateada()}</td>
+                                
                                 <td>
-                                    <a href="delete/${comunidad.comunidadId}" class="btn btn-danger">Eliminar</a>
+                                    <a href="asistencia/${comunidad.comunidadId}" class="btn btn-primary">Pasar Asistencia</a>
                                 </td>
-                                -->
+                              
                             </tr>
                         </c:forEach>
                     </tbody>

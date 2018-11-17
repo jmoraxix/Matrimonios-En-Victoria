@@ -1,0 +1,9 @@
+# Logs
+dialyLogFile=c:\tomcat7\logs\MEV.log
+errorFile=c:\tomcat\logs\MEV_ERROR.log
+
+# Database 
+user.jdbc.username = 
+user.jdbc.password = 
+
+# Tomcat 7

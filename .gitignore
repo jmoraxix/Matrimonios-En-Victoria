@@ -35,3 +35,5 @@ hs_err_pid*
 target/
 build/
 bin/
+
+personal.properties

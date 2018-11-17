@@ -108,7 +108,7 @@ public class UsuarioController {
 		{
 			Miembro miembro = new Miembro();
 			Usuario usuarioInsert = new Usuario();
-			
+			miembro.setCedula(usuarioForm.getCedula());
 			miembro.setNombre(usuarioForm.getNombre());
 			miembro.setApellido(usuarioForm.getApellido());
 			miembro.setFechaNacimiento(usuarioForm.getFechaNacimiento());
@@ -116,6 +116,7 @@ public class UsuarioController {
 			miembro.setDetalleDireccion(usuarioForm.getDetalleDireccion());
 			usuarioInsert.setMiembro(miembro);
 			usuarioInsert.setContrasena(usuarioForm.getContrasena());
+			usuarioInsert.setCedula(usuarioForm.getCedula());
 			
 			usuarioBO.save(usuarioInsert);
 		}

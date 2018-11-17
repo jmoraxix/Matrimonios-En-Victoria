@@ -37,7 +37,7 @@
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="/MatrimoniosEnVictoria/provincia/new">Provincias</a>
                     <a class="dropdown-item" href="/MatrimoniosEnVictoria/canton/new">Cantones</a>
-                    <a class="dropdown-item" href="/MatrimoniosEnVictoria/provincia/new">Distritos</a>
+                    <a class="dropdown-item" href="/MatrimoniosEnVictoria/distrito/new">Distritos</a>
                 </div>
             </li>
         </ul>

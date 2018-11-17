@@ -12,7 +12,7 @@
                 <form action="login" method="post">
                     <input type="hidden" name="login" value="login">
                         <div class="card-body">
-                                <h2 class="card-title">Cambio Sprint Review 2</h2>
+                                <h2 class="card-title">Login</h2>
                                 <div class="form-group">
                                     <label for="cedula ">Cédula</label>
                                     <input type="number" class="form-control " name="cedula" id="cedula" placeholder="Cedula" required>

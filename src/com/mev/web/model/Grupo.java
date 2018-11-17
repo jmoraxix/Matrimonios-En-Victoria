@@ -21,9 +21,16 @@ public class Grupo {
 	private int grupoId;
 	@Column
 	private String nombre;
-	//Varias reuniones pertenecen a un solo grupo
-	//@OneToMany(mappedBy = "grupo", cascade = CascadeType.ALL, orphanRemoval = true)
-	//private Set<Distrito> distritos;
+	
+	@OneToMany(mappedBy = "grupo", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<Reunion> reuniones;	
+	
+	public Set<Reunion> getReuniones() {
+		return reuniones;
+	}
+	public void setReuniones(Set<Reunion> reuniones) {
+		this.reuniones = reuniones;
+	}
 	public int getGrupoId() {
 		return grupoId;
 	}

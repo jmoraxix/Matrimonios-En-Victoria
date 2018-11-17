@@ -1,11 +1,14 @@
 package com.mev.web.model;
 
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 @Entity
@@ -21,6 +24,21 @@ public class Comunidad { //Las comunidades don los lugares físiscos donde toman
 	@Column
 	private String detalle;
 	
+	@OneToMany(mappedBy = "comunidad", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<Reunion> reuniones;	
+	
+	public Set<Reunion> getReuniones() {
+		return reuniones;
+	}
+
+
+
+	public void setReuniones(Set<Reunion> reuniones) {
+		this.reuniones = reuniones;
+	}
+
+
+
 	public Comunidad() {
 		
 	}

@@ -1,6 +1,7 @@
 package com.mev.web.model;
 
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,6 +13,7 @@ import javax.persistence.Table;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.InheritanceType;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -34,6 +36,18 @@ public class Miembro {
 	
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "miembro")
     private Usuario usuario; 
+	
+	//Varios miebros pueden ir a varias reuniones
+	@ManyToMany(mappedBy="asistentes")
+	private Set<Reunion> reuniones;
+
+	public Set<Reunion> getReuniones() {
+		return reuniones;
+	}
+
+	public void setReuniones(Set<Reunion> reuniones) {
+		this.reuniones = reuniones;
+	}
 
 	public Usuario getUsuario() {
 		return usuario;

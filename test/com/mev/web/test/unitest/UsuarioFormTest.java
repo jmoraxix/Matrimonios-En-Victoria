@@ -1,10 +1,7 @@
 package com.mev.web.test.unitest;
 
-import static org.junit.Assert.*;
-
 import org.junit.Assert;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import forms.newUsuarioForm;
 
@@ -13,7 +10,7 @@ public class UsuarioFormTest {
 	//@Autowired
 	private newUsuarioForm usuarioForm;
 	
-	//confirmar que las contraseñas sean iguales
+	//confirmar que las contrasenas sean iguales
 	@Test
 	public void test() {
 		newUsuarioForm usuarioForm = new newUsuarioForm();

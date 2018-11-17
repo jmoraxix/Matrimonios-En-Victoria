@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -18,8 +20,10 @@ public class Reunion {
 	@GeneratedValue // ID autogenerado por la base de datos
 	private int reunionId;
 	@Column
+	@OneToMany(mappedBy = "grupoId", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Grupo grupo;
 	@Column
+	@OneToMany(mappedBy = "comunidadId", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Comunidad comunidad;
 	@Column
 	private Date fecha;

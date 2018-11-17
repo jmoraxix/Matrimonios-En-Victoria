@@ -85,6 +85,8 @@ public class newUsuarioForm {
 	public newUsuarioForm() {
 		super();
 	}
+	
+	
 	public newUsuarioForm(String cedula, String nombre, String apellido, Date fechaNacimiento, String detalleDireccion,
 			String sexo, String contrasena, String confirmarContrasena) {
 		this.cedula = cedula;

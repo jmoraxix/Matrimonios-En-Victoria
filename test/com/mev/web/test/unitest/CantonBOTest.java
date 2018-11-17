@@ -27,20 +27,22 @@ private DistritoBO distritoBO;
 	}*/
 	public void saveCanton() {
 		Provincia prov = new Provincia("San Jose");
-		provinciaBO.save(prov);
+		//provinciaBO.save(prov);
+		provinciaBO.update(prov);
 		Canton cant = new Canton("Desamparados",prov);
-		cantonBO.save(cant);
+		//cantonBO.save(cant);
+		cantonBO.update(cant);
 	}
 
 	@Test
 	public void ListaNoVacia() {
-		Provincia prov = new Provincia("San Jose");
-		provinciaBO.save(prov);
-		Canton cant = new Canton("Desamparados",prov);
-		cantonBO.save(cant);
 		try {
-		Collection<Canton> listaCanton = this.cantonBO.listCantones();
-		assertNotNull("Retorno de Cantones NO NULO", listaCanton);	
+			Provincia prov = new Provincia("San Jose");
+			provinciaBO.save(prov);
+			Canton cant = new Canton("Desamparados",prov);
+			cantonBO.save(cant);
+			Collection<Canton> listaCanton = this.cantonBO.listCantones();
+			assertNotNull("Retorno de Cantones NO NULO", listaCanton);	
 		}catch(Exception e) {
 			System.err.println("Excepcion durante Consulta de Cantones");
 			fail(); 		

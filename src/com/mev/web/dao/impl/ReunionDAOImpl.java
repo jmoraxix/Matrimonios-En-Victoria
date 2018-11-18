@@ -52,7 +52,7 @@ public class ReunionDAOImpl extends AbstractDAO implements ReunionDAO {
 	@Override
 	public Collection<Reunion> listReuniones() {
 		Criteria criteria = getSession().createCriteria(Reunion.class);
-        return (List<Reunion>)criteria.addOrder(Order.desc("fecha")).list();
+        return (List<Reunion>)criteria.addOrder(Order.desc("fecha")).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
 	}
 	
 }

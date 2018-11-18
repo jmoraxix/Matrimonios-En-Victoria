@@ -126,5 +126,11 @@ public class Miembro {
 				+ fechaNacimiento + ", detalleDireccion=" + detalleDireccion + ", Sexo=" + Sexo + "]";
 	}
 
+	@Override
+	public boolean equals(Object miembro) {
+		// TODO Auto-generated method stub
+		return (((Miembro)miembro).getCedula().equals(this.getCedula()));
+	}
+
 	
 }

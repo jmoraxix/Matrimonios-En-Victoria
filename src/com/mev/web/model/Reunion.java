@@ -9,6 +9,7 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
@@ -30,7 +31,7 @@ public class Reunion {
 	private Comunidad comunidad;
 	@Column
 	private Date fecha;
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name="ASISTENCIA")
 	private Collection<Miembro> asistentes = new ArrayList<Miembro>();
 
@@ -41,6 +42,12 @@ public class Reunion {
 	
 	public int getReunionId() {
 		return reunionId;
+	}
+
+	@Override
+	public String toString() {
+		return "Reunion [reunionId=" + reunionId + ", grupo=" + grupo + ", comunidad=" + comunidad + ", fecha=" + fecha
+				+ ", asistentes=" + asistentes + "]";
 	}
 
 	public void setReunionId(int reunionId) {

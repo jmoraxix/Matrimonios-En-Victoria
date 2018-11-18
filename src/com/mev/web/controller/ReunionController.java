@@ -2,6 +2,7 @@ package com.mev.web.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Optional;
 
@@ -46,9 +47,11 @@ public class ReunionController {
 	@Autowired
 	private ReunionBO reunionBO;
 	@Autowired
-	private ComunidadBO comunidadBO;
+	private MiembroBO miembroBO;
 	@Autowired
 	private GrupoBO grupoBO;
+	@Autowired
+	private ComunidadBO comunidadBO;
 
 	final static Logger log = Logger.getLogger(ReunionController.class);
 
@@ -63,6 +66,14 @@ public class ReunionController {
 	public String getNew(@RequestParam(required = false, defaultValue = "null", value = "error") String error,
 			@RequestParam(required = false, defaultValue = "null", value = "success") String success,
 			Model model) {
+		
+		if(!error.equals("null")) {
+			model.addAttribute("error", error);
+		}
+		if(!success.equals("null")) {
+			model.addAttribute("success", success);
+		}
+		
 		model.addAttribute("reuniones", reunionBO.listReuniones());
 		model.addAttribute("comunidades", comunidadBO.listComunidades());
 		model.addAttribute("grupos", grupoBO.listGrupos());
@@ -94,6 +105,60 @@ public class ReunionController {
 		return ("redirect:/reunion/new");
 	}// END POST NEW
 
-	
+	////ASISTENCIA
+	@RequestMapping(value = "/reunion/asistencia/{reunionId}", method = RequestMethod.GET)
+	public String getAsistencia(@PathVariable(required = true) int reunionId, 
+			@RequestParam(required = false, defaultValue = "null", value = "search") String search,
+			@RequestParam(required = false, defaultValue = "null", value = "add") String add,
+			Model model) {
+		//Instanciar la reunion que se quiere pasar la lista
+		Reunion reunion = reunionBO.getReunionByID(reunionId);
+		
+		//Revisar si no existe, error
+		if(reunion == null) {
+			model.addAttribute("error", "Reunión no encontrada");
+			return "redirect:/reunion/new";
+		}
+		
+		//Revisar si tenemos que anadir algo
+		if(!(add.equals("null") || add.equals(""))) {
+			
+			Miembro miembroAdd = miembroBO.getMiembroByID(add);
+			
+			if(reunion.getAsistentes().contains(miembroAdd)) {
+				model.addAttribute("error", "Este usuario ya ha sido añadido a esta reunión");
+			}else {
+				reunion.getAsistentes().add(miembroAdd);
+				reunionBO.update(reunion);
+				model.addAttribute("success", "Añadido con éxito");
+			}
+		}
+		
+		//El cliente esta buscando algo o quiere ver todo
+		if(!(search.equals("null") || search.equals(""))) {
+			//Para que la barra se llene con lo que se busco
+			model.addAttribute("search", search);
+			//Buscamos los que cumplan con el termino de busqueda
+			model.addAttribute("miembros", miembroBO.searchMiembros(search));
+		} else {
+			model.addAttribute("miembros", miembroBO.listMiembros());
+		}
+		
+		//Si la reunion está bien, mostrar los datos y cargar el formulario
+		//model.addAttribute("miembros", miembroBO.listMiembrosByReunion(reunion));
+		model.addAttribute("reunion", reunion);
+		return "Reunion/asistencia";
+	}
 
+	@RequestMapping(value = "/reunion/asistencia/search", method = RequestMethod.POST)
+	public String postAsistencia(@RequestParam(required = false, defaultValue = "null", value = "reunionId") String reunionId, 
+			@RequestParam(required = false, defaultValue = "null", value = "search") String search,
+			Model model) {
+		//Por si alguna pagina necesita decir que la cedula esta mal u otro error
+		if(!(search.equals("null") || search.equals(""))) {
+			model.addAttribute("search", search);
+		}
+		
+		return "redirect:/reunion/asistencia/" + reunionId;
+	}// END GET LIST
 }

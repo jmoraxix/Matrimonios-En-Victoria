@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import com.mev.web.model.Categoria;
 import com.mev.web.model.Miembro;
+import com.mev.web.model.Reunion;
 
 public interface MiembroDAO {
 	
@@ -17,7 +18,11 @@ public interface MiembroDAO {
 	
 	public Collection<Miembro> listMiembros();
 	
+	public Collection<Miembro> listMiembrosByReunion(Reunion reunion);
+	
 	public Collection<Miembro> searchMiembros(String cedula, String nombre, String apellido);
 	
 	public Collection<Miembro> searchMiembros(String termino);
+	
+	public Collection<Miembro> searchMiembrosByReunion(String termino, Reunion reunion);
 }

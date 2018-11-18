@@ -49,7 +49,7 @@
 						</div>
 						<div class="form-group">
                             <label for="fechaString">Fecha</label>
-                            <form:input id="fechaReunion" type="datetime" path="fechaString" required="required" class="form-control" />
+                            <form:input autocomplete="off" id="fechaReunion" type="datetime" path="fechaString" required="required" class="form-control" />
                         </div>
 						  
 						</div>
@@ -81,7 +81,7 @@
                                 <td>${reunion.fechaFormateada()}</td>
                                 
                                 <td>
-                                    <a href="asistencia/${comunidad.comunidadId}" class="btn btn-primary">Pasar Asistencia</a>
+                                    <a href="asistencia/${reunion.reunionId}" class="btn btn-primary">Pasar Asistencia</a>
                                 </td>
                               
                             </tr>

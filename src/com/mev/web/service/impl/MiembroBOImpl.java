@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.mev.web.dao.MiembroDAO;
 import com.mev.web.model.Miembro;
+import com.mev.web.model.Reunion;
 import com.mev.web.service.MiembroBO;
 
 @Transactional
@@ -50,5 +51,15 @@ public class MiembroBOImpl implements MiembroBO {
 	@Override
 	public Collection<Miembro> searchMiembros(String termino) {
 		return this.MiembroDAO.searchMiembros(termino);
+	}
+
+	@Override
+	public Collection<Miembro> searchMiembrosByReunion(String termino, Reunion reunion) {
+		return this.MiembroDAO.searchMiembrosByReunion(termino, reunion);
+	}
+
+	@Override
+	public Collection<Miembro> listMiembrosByReunion(Reunion reunion) {
+		return this.MiembroDAO.listMiembrosByReunion(reunion);
 	}
 }

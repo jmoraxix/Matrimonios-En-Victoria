@@ -5,7 +5,7 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
+        <ul class="navbar-nav mr-auto">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
@@ -41,5 +41,11 @@
                 </div>
             </li>
         </ul>
+        
+        <ul class="navbar-nav">
+		  <li class="nav-item">
+		    <a class="nav-link" href="logout">Cerrar Sesión</a>
+		  </li>
+		</ul>
     </div>
 </nav>

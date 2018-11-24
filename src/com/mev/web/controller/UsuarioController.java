@@ -14,6 +14,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,6 +39,8 @@ public class UsuarioController {
 	 private UsuarioBO usuarioBO;
 	 @Autowired
 	 private MiembroBO miembroBO;
+	 @Autowired
+	 private Session session;
 
 	final static Logger log = Logger.getLogger(UsuarioController.class);
 
@@ -50,7 +53,13 @@ public class UsuarioController {
 	
 	@RequestMapping(value = "/usuario/new", method = RequestMethod.GET)
 	public String getNew(@RequestParam(required = false, defaultValue = "null", value = "upgrade") String upgrade,
-			Model model) {
+			Model model, @CookieValue(value = "mevUserId", defaultValue = "null") String mevUserId) {
+		
+		//Esta Logueado el usuario?
+		if(mevUserId.equals("null") || (!session.exists(mevUserId))) {
+			return Session.LOGIN_REDIRECT;
+		}
+		
 		model.addAttribute("title", "Nuevo Usuario");
 		
 		newUsuarioForm usuario = new newUsuarioForm();
@@ -131,7 +140,15 @@ public class UsuarioController {
 	/// LOGIN
 
 	@RequestMapping(value = {"/login", "/"}, method = RequestMethod.GET)
-	public String getLogin(Model model) {
+	public String getLogin(Model model, @CookieValue(value = "mevUserId", defaultValue = "null") String mevUserId) {
+		
+		session.returnOrGenerateDefaultUser();
+		
+		//Esta Logueado el usuario?
+		if((!mevUserId.equals("null")) || (session.exists(mevUserId))) {
+			return Session.DEFAULT_LANDING;
+		}
+		
 		return "Usuario/login";
 	}// END GET NEW
 
@@ -162,12 +179,28 @@ public class UsuarioController {
 		}
 	}// END POST LOGIN
 	
+	////LOGOUT
+	@RequestMapping(value = {"**/logout", "/logout"}, method = RequestMethod.GET)
+	public String getLogout(HttpServletResponse response, Model model) {
+		//RESET COOKIE
+		Cookie cookieUsuario = new Cookie("mevUserId", "null");
+		cookieUsuario.setPath("/");
+		cookieUsuario.setMaxAge(0);
+		response.addCookie(cookieUsuario);
+		return Session.LOGIN_REDIRECT;
+	}// END GET NEW
+	
 	////LIST
 	
 	@RequestMapping(value = "/usuario/list",method = RequestMethod.GET)
 	public String getList(@RequestParam(required = false, defaultValue = "null", value = "error") String error, 
 			@RequestParam(required = false, defaultValue = "null", value = "search") String search, 
-			Model model) {
+			Model model, @CookieValue(value = "mevUserId", defaultValue = "null") String mevUserId) {
+		//Esta Logueado el usuario?
+		if(mevUserId.equals("null") || (!session.exists(mevUserId))) {
+			return Session.LOGIN_REDIRECT;
+		}
+		
 		//Por si alguna pagina necesita decir que la cedula esta mal u otro error
 		if(!error.equals("null")) {
 			model.addAttribute("error", error);
@@ -200,7 +233,13 @@ public class UsuarioController {
 ////EDIT
 	@RequestMapping(value = "/usuario/edit/{cedula}", method = RequestMethod.GET)
 	public String getEdit(@PathVariable(required = true) String cedula, 
-			Model model) {
+			Model model, @CookieValue(value = "mevUserId", defaultValue = "null") String mevUserId) {
+		
+		//Esta Logueado el usuario?
+		if(mevUserId.equals("null") || (!session.exists(mevUserId))) {
+			return Session.LOGIN_REDIRECT;
+		}
+		
 		Usuario usuario = usuarioBO.getUsuarioByID(cedula);
 		
 		// Check if member is registered

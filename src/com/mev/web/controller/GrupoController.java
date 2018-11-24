@@ -12,6 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,6 +33,7 @@ import com.mev.web.service.MiembroBO;
 import com.mev.web.service.ProvinciaBO;
 import com.mev.web.service.GrupoBO;
 import com.mev.web.service.UsuarioBO;
+import com.mev.web.session.Session;
 
 import forms.newGrupoForm;
 
@@ -42,6 +44,8 @@ public class GrupoController {
 	private GrupoBO grupoBO;
 	@Autowired
 	private CantonBO cantonBO;
+	@Autowired
+	private Session session;
 
 	final static Logger log = Logger.getLogger(GrupoController.class);
 
@@ -56,7 +60,11 @@ public class GrupoController {
 	public String getNew(@RequestParam(required = false, defaultValue = "null", value = "error") String error,
 			@RequestParam(required = false, defaultValue = "null", value = "success") String success, 
 			@RequestParam(required = false, defaultValue = "null", value = "delete") String delete, 
-			Model model) {
+			Model model, @CookieValue(value = "mevUserId", defaultValue = "null") String mevUserId) {
+		//Esta Logueado el usuario?
+		if(mevUserId.equals("null") || (!session.exists(mevUserId))) {
+			return Session.LOGIN_REDIRECT;
+		}
 		if(!error.equals("null")) {
 			model.addAttribute("error", error);
 		}

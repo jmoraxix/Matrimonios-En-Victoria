@@ -4,6 +4,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -24,6 +27,7 @@ import com.mev.web.model.Usuario;
 import com.mev.web.service.CategoriaBO;
 import com.mev.web.service.MiembroBO;
 import com.mev.web.service.UsuarioBO;
+import com.mev.web.session.Session;
 
 import forms.newUsuarioForm;
 
@@ -133,15 +137,20 @@ public class UsuarioController {
 
 	@RequestMapping(value = {"/login", "/"}, params = "login", method = RequestMethod.POST)
 	public String postLogin(@RequestParam String cedula, 
-			@RequestParam String password, Model model) {
+			@RequestParam String password, HttpServletResponse response, Model model) {
 		
 		Usuario usuario = null;
 		usuario = usuarioBO.getUsuarioByID(cedula); 
 		if(usuario != null) {
 			if(usuario.getContrasena().equals(password)) {
 				//Login Success
-				model.addAttribute("title", "Nuevo Usuario");
-				return "redirect:usuario/new";
+				//model.addAttribute("title", "Nuevo Usuario");
+				//Store Cookie
+				Cookie cookieUsuario = new Cookie("mevUserId", cedula);
+				cookieUsuario.setPath("/");
+				response.addCookie(cookieUsuario);
+				//Redirect
+				return Session.DEFAULT_LANDING;
 			} else {
 				model.addAttribute("error", "Cedula o contraseña incorrecta");
 				return "Usuario/login";

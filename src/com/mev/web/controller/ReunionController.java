@@ -13,6 +13,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,6 +38,7 @@ import com.mev.web.service.ProvinciaBO;
 import com.mev.web.service.ReunionBO;
 import com.mev.web.service.ComunidadBO;
 import com.mev.web.service.UsuarioBO;
+import com.mev.web.session.Session;
 
 import forms.newComunidadForm;
 import forms.newReunionForm;
@@ -52,6 +54,8 @@ public class ReunionController {
 	private GrupoBO grupoBO;
 	@Autowired
 	private ComunidadBO comunidadBO;
+	@Autowired
+	private Session session;
 
 	final static Logger log = Logger.getLogger(ReunionController.class);
 
@@ -64,8 +68,14 @@ public class ReunionController {
 
 	@RequestMapping(value = "/reunion/new", method = RequestMethod.GET)
 	public String getNew(@RequestParam(required = false, defaultValue = "null", value = "error") String error,
-			@RequestParam(required = false, defaultValue = "null", value = "success") String success,
+			@RequestParam(required = false, defaultValue = "null", value = "success") String success, 
+			@CookieValue(value = "mevUserId", defaultValue = "null") String mevUserId,
 			Model model) {
+		//Esta Logueado el usuario?
+		if(mevUserId.equals("null") || (!session.exists(mevUserId))) {
+			model.addAttribute("error", mevUserId);
+			return Session.LOGIN_REDIRECT;
+		}
 		
 		if(!error.equals("null")) {
 			model.addAttribute("error", error);

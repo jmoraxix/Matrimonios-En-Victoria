@@ -12,7 +12,7 @@ import com.mev.web.service.ProvinciaBO;
 
 public class ProvinciaBOTest {
 
-	@Autowired( required = true )
+	@Autowired(required = true)
 	private ProvinciaBO provinciaBO;
 		
 		/*@Test(expected = NullPointerException.class)

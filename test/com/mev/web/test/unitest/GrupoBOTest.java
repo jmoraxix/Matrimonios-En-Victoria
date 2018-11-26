@@ -12,7 +12,7 @@ import com.mev.web.service.GrupoBO;
 
 public class GrupoBOTest {
 
-@Autowired
+	@Autowired(required = true)
 private GrupoBO grupoBO;
 	
 	/*@Test(expected = NullPointerException.class)

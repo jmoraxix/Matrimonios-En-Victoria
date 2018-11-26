@@ -20,7 +20,7 @@ import com.mev.web.service.CategoriaBO;
 @ContextConfiguration("file:WebContent/WEB-INF/MatrimoniosEnVictoria-servlet.xml")
 public class BasicTest {
 	
-	@Autowired
+	@Autowired(required = true)
 	private CategoriaBO categoriaBO;
 	
 	@Test

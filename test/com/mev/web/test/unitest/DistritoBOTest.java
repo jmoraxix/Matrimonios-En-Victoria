@@ -16,9 +16,11 @@ import com.mev.web.service.ProvinciaBO;
 
 public class DistritoBOTest {
 
-	@Autowired
+	@Autowired(required = true)
 	private DistritoBO distritoBO;
+	@Autowired(required = true)
 	private ProvinciaBO provinciaBO;
+	@Autowired(required = true)
 	private CantonBO cantonBO;
 
 		/*@Test(expected = NullPointerException.class)

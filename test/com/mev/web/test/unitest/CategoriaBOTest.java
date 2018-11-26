@@ -12,7 +12,7 @@ import com.mev.web.model.Categoria;
 import com.mev.web.service.CategoriaBO;
 
 public class CategoriaBOTest {
-	@Autowired
+	@Autowired(required = true)
 	private CategoriaBO categoriaBO;
 	
 	/*@Test(expected = NullPointerException.class)

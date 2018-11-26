@@ -7,6 +7,7 @@ import static org.junit.Assert.fail;
 import java.util.Collection;
 
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mev.web.model.Canton;
 import com.mev.web.model.Provincia;
@@ -15,8 +16,13 @@ import com.mev.web.service.DistritoBO;
 import com.mev.web.service.ProvinciaBO;
 
 public class CantonBOTest {
-private CantonBO cantonBO;
+@Autowired(required = true)
+	private CantonBO cantonBO;
+
+@Autowired(required = true)
 private ProvinciaBO provinciaBO;
+
+@Autowired(required = true)
 private DistritoBO distritoBO;
 
 

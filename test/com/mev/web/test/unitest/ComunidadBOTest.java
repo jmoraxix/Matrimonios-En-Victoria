@@ -18,10 +18,13 @@ import com.mev.web.service.ProvinciaBO;
 
 public class ComunidadBOTest {
 
-@Autowired
+	@Autowired(required = true)
 private ComunidadBO comunidadBO;
+	@Autowired(required = true)
 private ProvinciaBO provinciaBO;
+	@Autowired(required = true)
 private CantonBO cantonBO;
+	@Autowired(required = true)
 private DistritoBO distritoBO;
 
 

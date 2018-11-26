@@ -14,7 +14,7 @@ import forms.newUsuarioForm;
 
 public class UsuarioBOTest {
 
-	@Autowired
+	@Autowired(required = true)
 	private UsuarioBO usuarioBO;
 		
 		/*@Test(expected = NullPointerException.class)

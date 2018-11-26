@@ -16,7 +16,7 @@ import com.mev.web.service.MiembroBO;
 
 public class MiembroBOTest {
 
-	@Autowired
+	@Autowired(required = true)
 	private MiembroBO miembroBO;
 	SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
 

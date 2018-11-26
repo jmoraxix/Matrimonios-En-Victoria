@@ -12,6 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,12 +28,15 @@ import com.mev.web.service.CategoriaBO;
 import com.mev.web.service.MiembroBO;
 import com.mev.web.service.ProvinciaBO;
 import com.mev.web.service.UsuarioBO;
+import com.mev.web.session.Session;
 
 @Controller
 public class ProvinciaController {
 
 	@Autowired
 	private ProvinciaBO provinciaBO;
+	@Autowired
+	private Session session;
 
 	final static Logger log = Logger.getLogger(ProvinciaController.class);
 
@@ -44,7 +48,11 @@ public class ProvinciaController {
 	}
 
 	@RequestMapping(value = "/provincia/new", method = RequestMethod.GET)
-	public String getNew(Model model) {
+	public String getNew(Model model, @CookieValue(value = "mevUserId", defaultValue = "null") String mevUserId) {
+		//Esta Logueado el usuario?
+		if(mevUserId.equals("null") || (!session.exists(mevUserId))) {
+			return Session.LOGIN_REDIRECT;
+		}
 		model.addAttribute("provincias", provinciaBO.listProvincias());
 		model.addAttribute("provincia", new Provincia());
 		return "Provincia/new";

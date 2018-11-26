@@ -73,7 +73,6 @@ public class ReunionController {
 			Model model) {
 		//Esta Logueado el usuario?
 		if(mevUserId.equals("null") || (!session.exists(mevUserId))) {
-			model.addAttribute("error", mevUserId);
 			return Session.LOGIN_REDIRECT;
 		}
 		
@@ -120,7 +119,12 @@ public class ReunionController {
 	public String getAsistencia(@PathVariable(required = true) int reunionId, 
 			@RequestParam(required = false, defaultValue = "null", value = "search") String search,
 			@RequestParam(required = false, defaultValue = "null", value = "add") String add,
-			Model model) {
+			Model model, @CookieValue(value = "mevUserId", defaultValue = "null") String mevUserId) {
+		//Esta Logueado el usuario?
+		if(mevUserId.equals("null") || (!session.exists(mevUserId))) {
+			return Session.LOGIN_REDIRECT;
+		}
+		
 		//Instanciar la reunion que se quiere pasar la lista
 		Reunion reunion = reunionBO.getReunionByID(reunionId);
 		

@@ -12,6 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,12 +26,15 @@ import com.mev.web.model.Usuario;
 import com.mev.web.service.CategoriaBO;
 import com.mev.web.service.MiembroBO;
 import com.mev.web.service.UsuarioBO;
+import com.mev.web.session.Session;
 
 @Controller
 public class MiembroController {
 
 	@Autowired
 	private MiembroBO miembroBO;
+	@Autowired
+	private Session session;
 
 	final static Logger log = Logger.getLogger(MiembroController.class);
 
@@ -42,7 +46,11 @@ public class MiembroController {
 	}
 
 	@RequestMapping(value = "/miembro/new", method = RequestMethod.GET)
-	public String getNew(Model model) {
+	public String getNew(Model model, @CookieValue(value = "mevUserId", defaultValue = "null") String mevUserId) {
+		//Esta Logueado el usuario?
+		if(mevUserId.equals("null") || (!session.exists(mevUserId))) {
+			return Session.LOGIN_REDIRECT;
+		}
 		model.addAttribute("title", "Nuevo Miembro");
 		return "Miembro/new";
 	}// END GET NEW
@@ -80,7 +88,11 @@ public class MiembroController {
 	@RequestMapping(value = "/miembro/list",method = RequestMethod.GET)
 	public String getList(@RequestParam(required = false, defaultValue = "null", value = "error") String error, 
 			@RequestParam(required = false, defaultValue = "null", value = "search") String search,
-			Model model) {
+			Model model, @CookieValue(value = "mevUserId", defaultValue = "null") String mevUserId) {
+		//Esta Logueado el usuario?
+		if(mevUserId.equals("null") || (!session.exists(mevUserId))) {
+			return Session.LOGIN_REDIRECT;
+		}
 		//Por si alguna pagina necesita decir que la cedula esta mal u otro error
 		if(!error.equals("null")) {
 			model.addAttribute("error", error);
@@ -112,7 +124,11 @@ public class MiembroController {
 	//// EDIT
 	@RequestMapping(value = "/miembro/edit/{cedula}", method = RequestMethod.GET)
 	public String getEdit(@PathVariable(required = true) String cedula, 
-			Model model) {
+			Model model, @CookieValue(value = "mevUserId", defaultValue = "null") String mevUserId) {
+		//Esta Logueado el usuario?
+		if(mevUserId.equals("null") || (!session.exists(mevUserId))) {
+			return Session.LOGIN_REDIRECT;
+		}
 		Miembro miembro = miembroBO.getMiembroByID(cedula);
 
 		// Check if member is registered

@@ -12,6 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,6 +33,7 @@ import com.mev.web.service.MiembroBO;
 import com.mev.web.service.ProvinciaBO;
 import com.mev.web.service.ComunidadBO;
 import com.mev.web.service.UsuarioBO;
+import com.mev.web.session.Session;
 
 import forms.newComunidadForm;
 
@@ -42,6 +44,8 @@ public class ComunidadController {
 	private ComunidadBO comunidadBO;
 	@Autowired
 	private DistritoBO distritoBO;
+	@Autowired
+	private Session session;
 
 	final static Logger log = Logger.getLogger(ComunidadController.class);
 
@@ -53,7 +57,11 @@ public class ComunidadController {
 	}
 
 	@RequestMapping(value = "/comunidad/new", method = RequestMethod.GET)
-	public String getNew(Model model) {
+	public String getNew(Model model, @CookieValue(value = "mevUserId", defaultValue = "null") String mevUserId) {
+		//Esta Logueado el usuario?
+		if(mevUserId.equals("null") || (!session.exists(mevUserId))) {
+			return Session.LOGIN_REDIRECT;
+		}
 		model.addAttribute("comunidades", comunidadBO.listComunidades());
 		model.addAttribute("distritos", distritoBO.listDistritos());
 		model.addAttribute("comunidadForm", new newComunidadForm());

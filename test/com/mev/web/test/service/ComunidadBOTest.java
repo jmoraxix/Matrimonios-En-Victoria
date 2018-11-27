@@ -1,4 +1,4 @@
-package com.mev.web.test.unitest;
+package com.mev.web.test.service;
 
 import static org.junit.Assert.*;
 
@@ -19,42 +19,41 @@ import com.mev.web.service.ProvinciaBO;
 public class ComunidadBOTest {
 
 	@Autowired(required = true)
-private ComunidadBO comunidadBO;
+	private ComunidadBO comunidadBO;
 	@Autowired(required = true)
-private ProvinciaBO provinciaBO;
+	private ProvinciaBO provinciaBO;
 	@Autowired(required = true)
-private CantonBO cantonBO;
+	private CantonBO cantonBO;
 	@Autowired(required = true)
-private DistritoBO distritoBO;
+	private DistritoBO distritoBO;
 
-
-	/*@Test(expected = NullPointerException.class)
-	public void ListaVacia() {
-		Collection<Comunidad> listaComunidad = this.comunidadBO.listComunidades();
-		assertNull("Retorno de Comunidades NULO", listaComunidad);	
-	}*/
+	/*
+	 * @Test(expected = NullPointerException.class) public void ListaVacia() {
+	 * Collection<Comunidad> listaComunidad = this.comunidadBO.listComunidades();
+	 * assertNull("Retorno de Comunidades NULO", listaComunidad); }
+	 */
 
 	@Test
 	public void ListaNoVacia() {
 		try {
 			Provincia prov = new Provincia("San Jose");
 			provinciaBO.save(prov);
-			
-			Canton cant = new Canton("Desamparados",prov);
+
+			Canton cant = new Canton("Desamparados", prov);
 			cantonBO.save(cant);
-			
-			Distrito dist = new Distrito("San Miguel",cant);
+
+			Distrito dist = new Distrito("San Miguel", cant);
 			distritoBO.save(dist);
-			
-			Comunidad comu = new Comunidad(dist,"Comunidad x","Es la comunidad central");
+
+			Comunidad comu = new Comunidad(dist, "Comunidad x", "Es la comunidad central");
 			comunidadBO.save(comu);
-			
+
 			Collection<Comunidad> listaComunidad = this.comunidadBO.listComunidades();
-			assertNotNull("Retorno de Comunidades NO NULO", listaComunidad);	
-		}catch(Exception e) {
+			assertNotNull("Retorno de Comunidades NO NULO", listaComunidad);
+		} catch (Exception e) {
 			System.err.println("Excepcion durante Consulta de Cantones");
-			fail(); 		
+			fail();
 		}
 	}
-	
+
 }

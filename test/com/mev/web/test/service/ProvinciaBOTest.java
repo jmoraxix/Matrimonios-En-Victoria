@@ -1,4 +1,4 @@
-package com.mev.web.test.unitest;
+package com.mev.web.test.service;
 
 import static org.junit.Assert.*;
 
@@ -21,24 +21,24 @@ public class ProvinciaBOTest {
 
 	@Autowired(required = true)
 	private ProvinciaBO provinciaBO;
-		
-		/*@Test(expected = NullPointerException.class)
-		public void ListaVacia() {
+
+	/*
+	 * @Test(expected = NullPointerException.class) public void ListaVacia() {
+	 * Collection<Provincia> listaProvincia = this.provinciaBO.listProvincias();
+	 * assertNull("Retorno de Provincias Nulo",listaProvincia); }
+	 */
+
+	@Test
+	public void ListaNoVaciaTest() {
+		Provincia prov = new Provincia("San Jose");
+		provinciaBO.save(prov);
+		try {
+
 			Collection<Provincia> listaProvincia = this.provinciaBO.listProvincias();
-			assertNull("Retorno de Provincias Nulo",listaProvincia);
-		}*/
-		
-		@Test
-		public void ListaNoVaciaTest() {
-			Provincia prov = new Provincia("San Jose");
-			provinciaBO.save(prov);
-			try {
-				
-				Collection<Provincia> listaProvincia = this.provinciaBO.listProvincias();
-				assertNotNull("Retorno de Provincias NO Nulo",listaProvincia);
-			}catch(Exception e) {
-				System.err.println("Excepcion durante Consulta de Cantones");
-				fail(); 		
-			}
+			assertNotNull("Retorno de Provincias NO Nulo", listaProvincia);
+		} catch (Exception e) {
+			System.err.println("Excepcion durante Consulta de Cantones");
+			fail();
 		}
+	}
 }

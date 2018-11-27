@@ -1,16 +1,16 @@
-package com.mev.web.test.unitest;
+package com.mev.web.test.model;
 
 import org.junit.Assert;
 import org.junit.Test;
 
 import forms.newUsuarioForm;
 
-public class UsuarioFormTest {
+public class UsuarioTest {
 
-	//@Autowired
+	// @Autowired
 	private newUsuarioForm usuarioForm;
-	
-	//confirmar que las contrasenas sean iguales
+
+	// confirmar que las contrasenas sean iguales
 	@Test
 	public void test() {
 		newUsuarioForm usuarioForm = new newUsuarioForm();
@@ -18,8 +18,8 @@ public class UsuarioFormTest {
 		usuarioForm.setConfirmarContrasena("1");
 		final String contrasena = usuarioForm.getContrasena();
 		final String confContrasena = usuarioForm.getConfirmarContrasena();
-		Assert.assertEquals( contrasena,confContrasena);
-		Assert.assertNotNull(contrasena,confContrasena);
+		Assert.assertEquals(contrasena, confContrasena);
+		Assert.assertNotNull(contrasena, confContrasena);
 	}
 
 }

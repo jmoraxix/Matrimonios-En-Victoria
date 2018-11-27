@@ -1,4 +1,4 @@
-package com.mev.web.test.unitest;
+package com.mev.web.test.service;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -16,47 +16,41 @@ import com.mev.web.service.DistritoBO;
 import com.mev.web.service.ProvinciaBO;
 
 public class CantonBOTest {
-@Autowired(required = true)
+
+	@Autowired(required = true)
 	private CantonBO cantonBO;
 
-@Autowired(required = true)
-private ProvinciaBO provinciaBO;
+	@Autowired(required = true)
+	private ProvinciaBO provinciaBO;
 
-@Autowired(required = true)
-private DistritoBO distritoBO;
+	@Autowired(required = true)
+	private DistritoBO distritoBO;
 
-
-	/*@Test(expected = NullPointerException.class)
-	public void ListaVacia() {
-		Collection<Canton> listaCanton = this.cantonBO.listCantones();
-		assertNull("Retorno de Cantones NULO", listaCanton);	
-	}*/
-/*	public void saveCanton() {
-		Provincia prov = new Provincia("San Jose");
-		//provinciaBO.save(prov);
-		provinciaBO.update(prov);
-		Canton cant = new Canton("Desamparados",prov);
-		//cantonBO.save(cant);
-		cantonBO.update(cant);
-	}*/
+	/*
+	 * @Test(expected = NullPointerException.class) public void ListaVacia() {
+	 * Collection<Canton> listaCanton = this.cantonBO.listCantones();
+	 * assertNull("Retorno de Cantones NULO", listaCanton); }
+	 */
+	/*
+	 * public void saveCanton() { Provincia prov = new Provincia("San Jose");
+	 * //provinciaBO.save(prov); provinciaBO.update(prov); Canton cant = new
+	 * Canton("Desamparados",prov); //cantonBO.save(cant); cantonBO.update(cant); }
+	 */
 
 	@Test
 	public void ListaNoVacia() {
 		try {
 			Provincia prov = new Provincia("San Jose");
 			provinciaBO.save(prov);
-			Canton cant = new Canton("Desamparados",prov);
+			Canton cant = new Canton("Desamparados", prov);
 			cantonBO.save(cant);
 			Collection<Canton> listaCanton = this.cantonBO.listCantones();
-			assertNotNull("Retorno de Cantones NO NULO", listaCanton);	
-		}catch(Exception e) {
+			assertNotNull("Retorno de Cantones NO NULO", listaCanton);
+		} catch (Exception e) {
 			System.err.println("Excepcion durante Consulta de Cantones");
 			System.err.println(e);
-			fail(); 		
+			fail();
 		}
 	}
-	
-	
-	
-	
+
 }

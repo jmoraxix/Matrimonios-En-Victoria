@@ -1,4 +1,4 @@
-package com.mev.web.test.unitest;
+package com.mev.web.test.service;
 
 import static org.junit.Assert.*;
 
@@ -26,25 +26,24 @@ public class MiembroBOTest {
 	private MiembroBO miembroBO;
 	SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
 
-		
-		/*@Test(expected = NullPointerException.class)
-		public void ListaVacia() {
+	/*
+	 * @Test(expected = NullPointerException.class) public void ListaVacia() {
+	 * Collection<Miembro> listaMiembro = this.miembroBO.listMiembros();
+	 * assertNull("Retorno de Miembros Nulo",listaMiembro); }
+	 */
+
+	@Test
+	public void ListaNoVacia() throws ParseException {
+		try {
+			Date date1 = dateformat.parse("1995-05-01");
+			Miembro miem = new Miembro("156464", "Alfonso", "Perez", date1, "Desamparados, San Jose", "Masculino");
+			miembroBO.save(miem);
 			Collection<Miembro> listaMiembro = this.miembroBO.listMiembros();
-			assertNull("Retorno de Miembros Nulo",listaMiembro);
-		}*/
-		
-		@Test
-		public void ListaNoVacia() throws ParseException {
-			try {
-				 Date date1 = dateformat.parse("1995-05-01");
-				Miembro miem = new Miembro("156464","Alfonso","Perez",date1,"Desamparados, San Jose","Masculino");
-				miembroBO.save(miem);
-				Collection<Miembro> listaMiembro = this.miembroBO.listMiembros();
-				assertNotNull("Retorno de Miembros NO Nulo",listaMiembro);
-			}catch(Exception e) {
-				//System.err.println("Excepcion durante Consulta de Cantones");
-				System.err.println(e);
-				fail(); 		
-			}
+			assertNotNull("Retorno de Miembros NO Nulo", listaMiembro);
+		} catch (Exception e) {
+			// System.err.println("Excepcion durante Consulta de Cantones");
+			System.err.println(e);
+			fail();
 		}
+	}
 }

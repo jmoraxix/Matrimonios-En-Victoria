@@ -8,12 +8,18 @@ import java.util.Collection;
 import java.util.Date;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.mev.web.model.Miembro;
 import com.mev.web.service.MiembroBO;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@WebAppConfiguration
+@ContextConfiguration("file:WebContent/WEB-INF/MatrimoniosEnVictoria-servlet.xml")
 public class MiembroBOTest {
 
 	@Autowired(required = true)
@@ -29,15 +35,16 @@ public class MiembroBOTest {
 		
 		@Test
 		public void ListaNoVacia() throws ParseException {
-			//try {
+			try {
 				 Date date1 = dateformat.parse("1995-05-01");
 				Miembro miem = new Miembro("156464","Alfonso","Perez",date1,"Desamparados, San Jose","Masculino");
 				miembroBO.save(miem);
 				Collection<Miembro> listaMiembro = this.miembroBO.listMiembros();
 				assertNotNull("Retorno de Miembros NO Nulo",listaMiembro);
-			//}catch(Exception e) {
+			}catch(Exception e) {
 				//System.err.println("Excepcion durante Consulta de Cantones");
-				//fail(); 		
-			//}
+				System.err.println(e);
+				fail(); 		
+			}
 		}
 }

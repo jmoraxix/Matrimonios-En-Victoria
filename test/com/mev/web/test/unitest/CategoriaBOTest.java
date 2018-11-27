@@ -24,7 +24,7 @@ public class CategoriaBOTest {
 	@Test
 	public void ListaNoVacia() {
 		try {
-			Categoria cate = new Categoria();
+			//Categoria cate = new Categoria();
 			Collection<Categoria> listaCategoria = this.categoriaBO.listCategorias();
 			assertNotNull("Retorno de Categoria NO NULO", listaCategoria);	
 		}catch(Exception e) {

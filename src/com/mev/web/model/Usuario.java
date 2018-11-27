@@ -1,8 +1,5 @@
 package com.mev.web.model;
 
-import java.util.Date;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -12,19 +9,18 @@ import javax.persistence.Table;
 
 import forms.newUsuarioForm;
 
-import javax.persistence.PrimaryKeyJoinColumn;
-
 @Entity
 @Table(name = "USUARIO")
-//@PrimaryKeyJoinColumn(name = "cedula")
-public class Usuario{
+// @PrimaryKeyJoinColumn(name = "cedula")
+public class Usuario {
 	@Id
 	private String cedula;
-	
+
 	@Column(nullable = false)
 	private String contrasena;
-	
-	@OneToOne @MapsId
+
+	@OneToOne
+	@MapsId
 	private Miembro miembro;
 
 	public Usuario() {
@@ -74,5 +70,5 @@ public class Usuario{
 	public String toString() {
 		return "Usuario [cedula=" + cedula + ", contrasena=" + contrasena + ", miembro=" + miembro + "]";
 	}
-	
+
 }

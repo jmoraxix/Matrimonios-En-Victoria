@@ -17,20 +17,20 @@ public class Session {
 	private UsuarioBO usuarioBO;
 	@Autowired(required = true)
 	private MiembroBO miembroBO;
-	
+
 	public static final String DEFAULT_LANDING = "redirect:reunion/new";
 	public static final String LOGIN_REDIRECT = "redirect:/login";
 	public static final String DEFAULT_USER_ID = "123456789";
-	
+
 	public boolean exists(String cedulaUsuario) {
 		return (usuarioBO.getUsuarioByID(cedulaUsuario) != null);
 	}
-	
+
 	public Usuario returnOrGenerateDefaultUser() {
-		if(!this.exists(Session.DEFAULT_USER_ID)) {
+		if (!this.exists(Session.DEFAULT_USER_ID)) {
 			Miembro miembro = new Miembro();
 			Usuario usuarioUpgrade = new Usuario();
-			
+
 			miembro.setCedula(Session.DEFAULT_USER_ID);
 			miembro.setNombre("Administrador");
 			miembro.setApellido("Por Defecto");
@@ -39,11 +39,11 @@ public class Session {
 			miembro.setDetalleDireccion("Detalle default");
 			usuarioUpgrade.setMiembro(miembro);
 			usuarioUpgrade.setContrasena("admin");
-			
+
 			usuarioBO.saveOrUpdate(usuarioUpgrade);
 			return usuarioUpgrade;
-		}else {
+		} else {
 			return usuarioBO.getUsuarioByID(Session.DEFAULT_USER_ID);
 		}
-	}//END GENERATE DEFAULT USER
+	}// END GENERATE DEFAULT USER
 }

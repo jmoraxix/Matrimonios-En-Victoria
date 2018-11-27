@@ -7,18 +7,15 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.InheritanceType;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
-
 @Entity
 @Table(name = "MIEMBRO")
-//@Inheritance(strategy=InheritanceType.JOINED)
+// @Inheritance(strategy=InheritanceType.JOINED)
 public class Miembro {
 	@Id
 	private String cedula;
@@ -33,12 +30,12 @@ public class Miembro {
 	private String detalleDireccion;
 	@Column
 	private String Sexo;
-	
+
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "miembro")
-    private Usuario usuario; 
-	
-	//Varios miebros pueden ir a varias reuniones
-	@ManyToMany(mappedBy="asistentes")
+	private Usuario usuario;
+
+	// Varios miebros pueden ir a varias reuniones
+	@ManyToMany(mappedBy = "asistentes")
 	private Set<Reunion> reuniones;
 
 	public Set<Reunion> getReuniones() {
@@ -58,12 +55,12 @@ public class Miembro {
 	}
 
 	public Miembro() {
-		//super();
+		// super();
 	}
 
 	public Miembro(String cedula, String nombre, String apellido, Date fechaNacimiento, String detalleDireccion,
 			String sexo) {
-		//super();
+		// super();
 		this.cedula = cedula;
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -129,8 +126,7 @@ public class Miembro {
 	@Override
 	public boolean equals(Object miembro) {
 		// TODO Auto-generated method stub
-		return (((Miembro)miembro).getCedula().equals(this.getCedula()));
+		return (((Miembro) miembro).getCedula().equals(this.getCedula()));
 	}
 
-	
 }

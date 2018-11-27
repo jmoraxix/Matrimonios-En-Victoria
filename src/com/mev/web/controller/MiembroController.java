@@ -3,12 +3,10 @@ package com.mev.web.controller;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Optional;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
@@ -19,13 +17,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.mev.web.model.Miembro;
-import com.mev.web.model.Usuario;
-import com.mev.web.service.CategoriaBO;
 import com.mev.web.service.MiembroBO;
-import com.mev.web.service.UsuarioBO;
 import com.mev.web.session.Session;
 
 @Controller
@@ -47,8 +41,8 @@ public class MiembroController {
 
 	@RequestMapping(value = "/miembro/new", method = RequestMethod.GET)
 	public String getNew(Model model, @CookieValue(value = "mevUserId", defaultValue = "null") String mevUserId) {
-		//Esta Logueado el usuario?
-		if(mevUserId.equals("null") || (!session.exists(mevUserId))) {
+		// Esta Logueado el usuario?
+		if (mevUserId.equals("null") || (!session.exists(mevUserId))) {
 			return Session.LOGIN_REDIRECT;
 		}
 		model.addAttribute("title", "Nuevo Miembro");
@@ -85,48 +79,49 @@ public class MiembroController {
 
 	//// LIST
 
-	@RequestMapping(value = "/miembro/list",method = RequestMethod.GET)
-	public String getList(@RequestParam(required = false, defaultValue = "null", value = "error") String error, 
-			@RequestParam(required = false, defaultValue = "null", value = "search") String search,
-			Model model, @CookieValue(value = "mevUserId", defaultValue = "null") String mevUserId) {
-		//Esta Logueado el usuario?
-		if(mevUserId.equals("null") || (!session.exists(mevUserId))) {
+	@RequestMapping(value = "/miembro/list", method = RequestMethod.GET)
+	public String getList(@RequestParam(required = false, defaultValue = "null", value = "error") String error,
+			@RequestParam(required = false, defaultValue = "null", value = "search") String search, Model model,
+			@CookieValue(value = "mevUserId", defaultValue = "null") String mevUserId) {
+		// Esta Logueado el usuario?
+		if (mevUserId.equals("null") || (!session.exists(mevUserId))) {
 			return Session.LOGIN_REDIRECT;
 		}
-		//Por si alguna pagina necesita decir que la cedula esta mal u otro error
-		if(!error.equals("null")) {
+		// Por si alguna pagina necesita decir que la cedula esta mal u otro error
+		if (!error.equals("null")) {
 			model.addAttribute("error", error);
 		}
-		
-		//El cliente esta buscando algo o quiere ver todo
-		if(!(search.equals("null") || search.equals(""))) {
-			//Para que la barra se llene con lo que se busco
+
+		// El cliente esta buscando algo o quiere ver todo
+		if (!(search.equals("null") || search.equals(""))) {
+			// Para que la barra se llene con lo que se busco
 			model.addAttribute("search", search);
-			//Buscamos los que cumplan con el termino de busqueda
+			// Buscamos los que cumplan con el termino de busqueda
 			model.addAttribute("miembros", miembroBO.searchMiembros(search));
 		} else {
 			model.addAttribute("miembros", miembroBO.listMiembros());
 		}
-		
+
 		return "Miembro/list";
 	}// END GET LIST
-	
-	@RequestMapping(value = "miembro/list",method = RequestMethod.POST)
-	public String postList(@RequestParam(required = false, defaultValue = "null", value = "search") String search, Model model) {
-		//Por si alguna pagina necesita decir que la cedula esta mal u otro error
-		if(!(search.equals("null") || search.equals(""))) {
+
+	@RequestMapping(value = "miembro/list", method = RequestMethod.POST)
+	public String postList(@RequestParam(required = false, defaultValue = "null", value = "search") String search,
+			Model model) {
+		// Por si alguna pagina necesita decir que la cedula esta mal u otro error
+		if (!(search.equals("null") || search.equals(""))) {
 			model.addAttribute("search", search);
 		}
-		
+
 		return "redirect:/miembro/list";
 	}// END GET LIST
 
 	//// EDIT
 	@RequestMapping(value = "/miembro/edit/{cedula}", method = RequestMethod.GET)
-	public String getEdit(@PathVariable(required = true) String cedula, 
-			Model model, @CookieValue(value = "mevUserId", defaultValue = "null") String mevUserId) {
-		//Esta Logueado el usuario?
-		if(mevUserId.equals("null") || (!session.exists(mevUserId))) {
+	public String getEdit(@PathVariable(required = true) String cedula, Model model,
+			@CookieValue(value = "mevUserId", defaultValue = "null") String mevUserId) {
+		// Esta Logueado el usuario?
+		if (mevUserId.equals("null") || (!session.exists(mevUserId))) {
 			return Session.LOGIN_REDIRECT;
 		}
 		Miembro miembro = miembroBO.getMiembroByID(cedula);
@@ -137,7 +132,7 @@ public class MiembroController {
 			return "redirect:/miembro/list";
 		}
 
-		//model.addAttribute("sexo", miembro.getSexo());
+		// model.addAttribute("sexo", miembro.getSexo());
 		model.addAttribute("miembro", miembro);
 
 		return "Miembro/edit";
@@ -145,16 +140,16 @@ public class MiembroController {
 
 	@RequestMapping(value = "/miembro/edit", params = "edit", method = RequestMethod.POST)
 	public String postEdit(@ModelAttribute("miembro") Miembro miembro, Model model) {
-		
+
 		Miembro miembroOriginal = miembroBO.getMiembroByID(miembro.getCedula());
-		
+
 		if (miembroOriginal == null) {
 			model.addAttribute("error", "Cedula no encontrada");
 			return "redirect:/miembro/list";
 		}
-		
-		//miembroOriginal.setNombre(miembro.getNombre());
-		
+
+		// miembroOriginal.setNombre(miembro.getNombre());
+
 		miembroBO.update(miembro);
 		model.addAttribute("success", "Guardado con exito!");
 		return ("Miembro/edit");

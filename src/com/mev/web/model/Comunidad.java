@@ -9,13 +9,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
 @Entity
 @Table(name = "COMUNIDAD")
-public class Comunidad { //Las comunidades don los lugares físiscos donde toman lugar las reuniones
+public class Comunidad { // Las comunidades don los lugares físiscos donde toman lugar las reuniones
 	@Id
-	@GeneratedValue  //ID autogenerado por la base de datos
+	@GeneratedValue // ID autogenerado por la base de datos
 	private int comunidadId;
 	@ManyToOne(optional = false)
 	private Distrito distrito;
@@ -23,27 +23,21 @@ public class Comunidad { //Las comunidades don los lugares físiscos donde toman
 	private String nombre;
 	@Column
 	private String detalle;
-	
+
 	@OneToMany(mappedBy = "comunidad", cascade = CascadeType.ALL, orphanRemoval = true)
-	private Set<Reunion> reuniones;	
-	
+	private Set<Reunion> reuniones;
+
 	public Set<Reunion> getReuniones() {
 		return reuniones;
 	}
-
-
 
 	public void setReuniones(Set<Reunion> reuniones) {
 		this.reuniones = reuniones;
 	}
 
-
-
 	public Comunidad() {
-		
+
 	}
-	
-	
 
 	public Comunidad(int comunidadId, Distrito distrito, String nombre, String detalle) {
 		super();
@@ -52,15 +46,13 @@ public class Comunidad { //Las comunidades don los lugares físiscos donde toman
 		this.nombre = nombre;
 		this.detalle = detalle;
 	}
-	
+
 	public Comunidad(Distrito distrito, String nombre, String detalle) {
 		super();
 		this.distrito = distrito;
 		this.nombre = nombre;
 		this.detalle = detalle;
 	}
-
-
 
 	public int getComunidadId() {
 		return comunidadId;
@@ -93,6 +85,5 @@ public class Comunidad { //Las comunidades don los lugares físiscos donde toman
 	public void setDetalle(String detalle) {
 		this.detalle = detalle;
 	}
-	
-	
+
 }

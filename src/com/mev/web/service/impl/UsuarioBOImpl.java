@@ -16,7 +16,7 @@ public class UsuarioBOImpl implements UsuarioBO {
 
 	@Autowired
 	private UsuarioDAO UsuarioDAO;
-	
+
 	@Override
 	public void save(Usuario Usuario) {
 		this.UsuarioDAO.save(Usuario);
@@ -26,7 +26,7 @@ public class UsuarioBOImpl implements UsuarioBO {
 	public void saveOrUpdate(Usuario Usuario) {
 		this.UsuarioDAO.saveOrUpdate(Usuario);
 	}
-	
+
 	@Override
 	public void update(Usuario Usuario) {
 		this.UsuarioDAO.update(Usuario);

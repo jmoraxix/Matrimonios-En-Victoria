@@ -14,20 +14,20 @@ public class WelcomeController {
 	@Autowired
 	private CategoriaBO categoriaBO;
 
-	final static Logger log = Logger.getLogger(WelcomeController.class);	
-	
+	final static Logger log = Logger.getLogger(WelcomeController.class);
+
 	@RequestMapping("/welcome")
 	public ModelAndView helloWorld() {
-		
+
 		try {
 			this.categoriaBO.listCategorias();
 		} catch (Exception e) {
 			log.error("Error al obtener categorías", e);
 		}
-		
+
 		String message = "<br><div style='text-align:center;'>"
 				+ "<h3>********** Hello World, Spring MVC Tutorial</h3>This message is coming from CrunchifyHelloWorld.java **********</div><br><br>";
 		return new ModelAndView("welcome", "message", message);
 	}
-	
+
 }

@@ -2,7 +2,6 @@ package com.mev.web.dao;
 
 import java.util.Collection;
 
-import com.mev.web.model.Categoria;
 import com.mev.web.model.Miembro;
 import com.mev.web.model.Reunion;
 

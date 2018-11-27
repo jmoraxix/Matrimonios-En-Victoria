@@ -12,7 +12,6 @@ import com.mev.web.dao.AbstractDAO;
 import com.mev.web.dao.ReunionDAO;
 import com.mev.web.model.Reunion;
 
-
 @Repository
 public class ReunionDAOImpl extends AbstractDAO implements ReunionDAO {
 
@@ -37,14 +36,14 @@ public class ReunionDAOImpl extends AbstractDAO implements ReunionDAO {
 	public Reunion getReunionByID(int reunionId) {
 		Criteria criteria = getSession().createCriteria(Reunion.class);
 		criteria.add(Restrictions.eq("reunionId", reunionId));
-		List<Reunion> listaReuniones = (List<Reunion>)criteria.list();
+		List<Reunion> listaReuniones = (List<Reunion>) criteria.list();
 
-		//Revisamos si no hay resultado, en cuyo caso retornamos null
-		if (listaReuniones.isEmpty()){
+		// Revisamos si no hay resultado, en cuyo caso retornamos null
+		if (listaReuniones.isEmpty()) {
 			return null;
 		}
-		//Si hay match, retornamos el elemento, en este caso es la 
-		//llave primaria asi que es seguro asumir que solo hay un resultado
+		// Si hay match, retornamos el elemento, en este caso es la
+		// llave primaria asi que es seguro asumir que solo hay un resultado
 		return listaReuniones.get(0);
 	}
 
@@ -52,7 +51,8 @@ public class ReunionDAOImpl extends AbstractDAO implements ReunionDAO {
 	@Override
 	public Collection<Reunion> listReuniones() {
 		Criteria criteria = getSession().createCriteria(Reunion.class);
-        return (List<Reunion>)criteria.addOrder(Order.desc("fecha")).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
+		return (List<Reunion>) criteria.addOrder(Order.desc("fecha"))
+				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
 	}
-	
+
 }

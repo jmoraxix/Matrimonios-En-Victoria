@@ -1,30 +1,29 @@
 package com.mev.web.model;
 
-import javax.persistence.Table;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "PROVINCIA")
 
 public class Provincia {
 	@Id
-	@GeneratedValue  //ID autogenerado por la base de datos
+	@GeneratedValue // ID autogenerado por la base de datos
 	private int provinciaId;
 	@Column
 	private String nombre;
-	//Una provincia tiene varios cantones, en la calase canton la provincia aparece como "provincia"
+	// Una provincia tiene varios cantones, en la calase canton la provincia aparece
+	// como "provincia"
 	@OneToMany(mappedBy = "provincia", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<Canton> cantones;
-	
+
 	@Override
 	public String toString() {
 		return "Nombre: " + nombre + "| Id: " + provinciaId;

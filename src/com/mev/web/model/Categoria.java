@@ -18,32 +18,32 @@ public class Categoria {
 	private int categoriaId;
 	private String descripcion;
 	private Collection<Subcategoria> subcategorias;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "CATEGORIA_ID")
 	public int getCategoriaId() {
 		return categoriaId;
 	}
-	
+
 	public void setCategoriaId(int categoriaId) {
 		this.categoriaId = categoriaId;
 	}
-	
+
 	@Column(name = "DESCRIPCION")
 	public String getDescripcion() {
 		return descripcion;
 	}
-	
+
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-	
-	@OneToMany(cascade=CascadeType.ALL, mappedBy="categoria")  
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "categoria")
 	public Collection<Subcategoria> getSubcategorias() {
 		return subcategorias;
 	}
-	
+
 	public void setSubcategorias(Collection<Subcategoria> subcategorias) {
 		this.subcategorias = subcategorias;
 	}

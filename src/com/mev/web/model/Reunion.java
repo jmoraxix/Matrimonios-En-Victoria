@@ -15,8 +15,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -31,15 +29,15 @@ public class Reunion {
 	private Comunidad comunidad;
 	@Column
 	private Date fecha;
-	@ManyToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(name="ASISTENCIA")
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name = "ASISTENCIA")
 	private Collection<Miembro> asistentes = new ArrayList<Miembro>();
 
-	public String fechaFormateada(){
+	public String fechaFormateada() {
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		return df.format(this.fecha);
 	}
-	
+
 	public int getReunionId() {
 		return reunionId;
 	}

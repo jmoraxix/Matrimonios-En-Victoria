@@ -17,7 +17,7 @@ public class MiembroBOImpl implements MiembroBO {
 
 	@Autowired
 	private MiembroDAO MiembroDAO;
-	
+
 	@Override
 	public void save(Miembro Miembro) {
 		this.MiembroDAO.save(Miembro);
@@ -42,12 +42,12 @@ public class MiembroBOImpl implements MiembroBO {
 	public Collection<Miembro> listMiembros() {
 		return this.MiembroDAO.listMiembros();
 	}
-	
+
 	@Override
 	public Collection<Miembro> searchMiembros(String cedula, String nombre, String apellido) {
 		return this.MiembroDAO.searchMiembros(cedula, nombre, apellido);
 	}
-	
+
 	@Override
 	public Collection<Miembro> searchMiembros(String termino) {
 		return this.MiembroDAO.searchMiembros(termino);

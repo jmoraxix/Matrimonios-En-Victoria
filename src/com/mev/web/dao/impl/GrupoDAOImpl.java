@@ -4,18 +4,12 @@ import java.util.Collection;
 import java.util.List;
 
 import org.hibernate.Criteria;
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import com.mev.web.dao.AbstractDAO;
-import com.mev.web.dao.CategoriaDAO;
 import com.mev.web.dao.GrupoDAO;
-import com.mev.web.model.Categoria;
-import com.mev.web.model.Miembro;
 import com.mev.web.model.Grupo;
-
 
 @Repository
 public class GrupoDAOImpl extends AbstractDAO implements GrupoDAO {
@@ -36,18 +30,19 @@ public class GrupoDAOImpl extends AbstractDAO implements GrupoDAO {
 		getSession().delete(Grupo);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Grupo getGrupoByID(int GrupoID) {
 		Criteria criteria = getSession().createCriteria(Grupo.class);
 		criteria.add(Restrictions.eq("grupoId", GrupoID));
-		List<Grupo> listaGrupos = (List<Grupo>)criteria.list();
+		List<Grupo> listaGrupos = (List<Grupo>) criteria.list();
 
-		//Revisamos si no hay resultado, en cuyo caso retornamos null
-		if (listaGrupos.isEmpty()){
+		// Revisamos si no hay resultado, en cuyo caso retornamos null
+		if (listaGrupos.isEmpty()) {
 			return null;
 		}
-		//Si hay match, retornamos el elemento, en este caso es la 
-		//llave primaria asi que es seguro asumir que solo hay un resultado
+		// Si hay match, retornamos el elemento, en este caso es la
+		// llave primaria asi que es seguro asumir que solo hay un resultado
 		return listaGrupos.get(0);
 	}
 
@@ -55,7 +50,7 @@ public class GrupoDAOImpl extends AbstractDAO implements GrupoDAO {
 	@Override
 	public Collection<Grupo> listGrupos() {
 		Criteria criteria = getSession().createCriteria(Grupo.class);
-        return (List<Grupo>)criteria.list();
+		return (List<Grupo>) criteria.list();
 	}
-	
+
 }

@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="SUBCATEGORIA")
+@Table(name = "SUBCATEGORIA")
 public class Subcategoria {
 
 	private int subcategoriaId;
@@ -23,22 +23,22 @@ public class Subcategoria {
 	public int getSubcategoriaId() {
 		return subcategoriaId;
 	}
-	
+
 	@Column(name = "DESCRIPCION")
 	public void setSubcategoriaId(int subcategoriaId) {
 		this.subcategoriaId = subcategoriaId;
 	}
-	
+
 	public String getDescripcion() {
 		return descripcion;
 	}
-	
+
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
 
-    @ManyToOne
-    @JoinColumn(name = "CATEGORIA_ID")
+	@ManyToOne
+	@JoinColumn(name = "CATEGORIA_ID")
 	public Categoria getCategoria() {
 		return categoria;
 	}

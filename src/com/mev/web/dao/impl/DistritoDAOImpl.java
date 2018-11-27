@@ -4,18 +4,12 @@ import java.util.Collection;
 import java.util.List;
 
 import org.hibernate.Criteria;
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import com.mev.web.dao.AbstractDAO;
-import com.mev.web.dao.CategoriaDAO;
 import com.mev.web.dao.DistritoDAO;
-import com.mev.web.model.Categoria;
-import com.mev.web.model.Miembro;
 import com.mev.web.model.Distrito;
-
 
 @Repository
 public class DistritoDAOImpl extends AbstractDAO implements DistritoDAO {
@@ -36,18 +30,19 @@ public class DistritoDAOImpl extends AbstractDAO implements DistritoDAO {
 		getSession().delete(Distrito);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Distrito getDistritoByID(int DistritoID) {
 		Criteria criteria = getSession().createCriteria(Distrito.class);
 		criteria.add(Restrictions.eq("distritoId", DistritoID));
-		List<Distrito> listaDistritos = (List<Distrito>)criteria.list();
+		List<Distrito> listaDistritos = (List<Distrito>) criteria.list();
 
-		//Revisamos si no hay resultado, en cuyo caso retornamos null
-		if (listaDistritos.isEmpty()){
+		// Revisamos si no hay resultado, en cuyo caso retornamos null
+		if (listaDistritos.isEmpty()) {
 			return null;
 		}
-		//Si hay match, retornamos el elemento, en este caso es la 
-		//llave primaria asi que es seguro asumir que solo hay un resultado
+		// Si hay match, retornamos el elemento, en este caso es la
+		// llave primaria asi que es seguro asumir que solo hay un resultado
 		return listaDistritos.get(0);
 	}
 
@@ -55,7 +50,7 @@ public class DistritoDAOImpl extends AbstractDAO implements DistritoDAO {
 	@Override
 	public Collection<Distrito> listDistritos() {
 		Criteria criteria = getSession().createCriteria(Distrito.class);
-        return (List<Distrito>)criteria.list();
+		return (List<Distrito>) criteria.list();
 	}
-	
+
 }

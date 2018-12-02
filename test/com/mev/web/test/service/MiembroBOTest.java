@@ -35,9 +35,14 @@ public class MiembroBOTest {
 	@Test
 	public void ListaNoVacia() throws ParseException {
 		try {
-			Date date1 = dateformat.parse("1995-05-01");
-			Miembro miem = new Miembro("156464", "Alfonso", "Perez", date1, "Desamparados, San Jose", "Masculino");
-			miembroBO.save(miem);
+			//Solo en caso de que no halla nada, tratamos de insertat uno nuevo
+			try {
+				Date date1 = dateformat.parse("1995-05-01");
+				Miembro miem = new Miembro("156464", "Alfonso", "Perez", date1, "Desamparados, San Jose", "Masculino");
+				miembroBO.save(miem);
+			}catch(Exception e) {
+				//Do nothing
+			}
 			Collection<Miembro> listaMiembro = this.miembroBO.listMiembros();
 			assertNotNull("Retorno de Miembros NO Nulo", listaMiembro);
 		} catch (Exception e) {

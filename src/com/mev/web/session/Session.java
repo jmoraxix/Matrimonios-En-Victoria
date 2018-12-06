@@ -40,7 +40,7 @@ public class Session {
 			usuarioUpgrade.setMiembro(miembro);
 			usuarioUpgrade.setContrasena("admin");
 
-			usuarioBO.saveOrUpdate(usuarioUpgrade);
+			usuarioBO.save(usuarioUpgrade);
 			return usuarioUpgrade;
 		} else {
 			return usuarioBO.getUsuarioByID(Session.DEFAULT_USER_ID);

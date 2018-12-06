@@ -34,6 +34,7 @@
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="/MatrimoniosEnVictoria/comunidad/new">Comunidades</a>
                     <a class="dropdown-item" href="/MatrimoniosEnVictoria/grupo/new">Grupos</a>
+                    <a class="dropdown-item" href="/MatrimoniosEnVictoria/reunion/new">Reuniones</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="/MatrimoniosEnVictoria/provincia/new">Provincias</a>
                     <a class="dropdown-item" href="/MatrimoniosEnVictoria/canton/new">Cantones</a>

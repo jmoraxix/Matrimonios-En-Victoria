@@ -46,7 +46,6 @@
                             <th scope="col">Apellidos</th>
                             <th scope="col">Sexo</th>
                             <th scope="col"></th>
-                            <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -59,9 +58,7 @@
                                 <td>
                                     <a href="edit/${usuario.cedula}" class="btn btn-warning">Editar</a>
                                 </td>
-                                <td>
-                                    <a href="delete/${usuario.cedula}" class="btn btn-danger">Eliminar</a>
-                                </td>
+                                
                             </tr>
                         </c:forEach>
                     </tbody>
